@@ -36,11 +36,28 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function ($router) {
-    Route::get('getAll', [\App\Http\Controllers\User\UserController::class, 'getAll'])->name('getAll');
-    Route::get('getOne', [\App\Http\Controllers\User\UserController::class, 'getOne'])->name('getOne');
-    Route::post('create', [\App\Http\Controllers\User\UserController::class, 'create'])->name('create');
-    Route::post('changePassword', [\App\Http\Controllers\User\UserController::class, 'changePassword'])->name('changePassword');
-    Route::put('update', [\App\Http\Controllers\User\UserController::class, 'update'])->name('update');
-    Route::put('toggleEnable', [\App\Http\Controllers\User\UserController::class, 'toggleEnable'])->name('toggleEnable');
+    Route::get('getAll', [\App\Http\Controllers\UserController::class, 'getAll'])->name('getAll');
+    Route::get('getOne', [\App\Http\Controllers\UserController::class, 'getOne'])->name('getOne');
+    Route::post('create', [\App\Http\Controllers\UserController::class, 'create'])->name('create');
+    Route::post('changePassword', [\App\Http\Controllers\UserController::class, 'changePassword'])->name('changePassword');
+    Route::put('update', [\App\Http\Controllers\UserController::class, 'update'])->name('update');
+    Route::put('toggleEnable', [\App\Http\Controllers\UserController::class, 'toggleEnable'])->name('toggleEnable');
 });
 
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'rol'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\RolController::class, 'getAll'])->name('getAll');
+    Route::get('getOne', [\App\Http\Controllers\RolController::class, 'getOne'])->name('getOne');
+});
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'roluser'
+], function ($router) {
+    Route::get('getRolUser', [\App\Http\Controllers\RolUserController::class, 'getRolUser'])->name('getRolUser');
+    Route::put('toggleEnable', [\App\Http\Controllers\RolUserController::class, 'toggleEnable'])->name('toggleEnable');
+});

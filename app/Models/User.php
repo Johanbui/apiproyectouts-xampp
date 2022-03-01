@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, HasFactory;
+    protected $hidden = ['password','remember_token'];
 
     // Rest omitted for brevity
 
@@ -32,4 +33,5 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
 }

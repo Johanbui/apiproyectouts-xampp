@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Rol;
+use App\Models\UserRol;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
@@ -44,10 +46,26 @@ class AuthController extends Controller
      */
     public function me()
     {
+        $user = auth()->user();
+
+        $user_roles = UserRol::where('user_id',$user->id)
+                            ->where('enable',"=",1)
+                            ->get();;
+        $user_roles_obj = [];
+        for ($i=0; $i < count($user_roles); $i++) {
+
+            $rol = Rol::find($user_roles[$i]->rol_id);
+            if($rol->enable == 1){
+                array_push($user_roles_obj, $rol);
+            }
+
+        }
+
+        $user->users_rols = $user_roles_obj;
 
         return response()->json([
-            "data" => auth()->user(),
-            "code" => 20000
+            'data' => auth()->user(),
+            'code' => 20000
         ]);
 
     }
@@ -63,10 +81,10 @@ class AuthController extends Controller
 
 
         return response()->json([
-            "data"=>[
+            'data'=>[
                 'message' => 'Successfully logged out'
             ],
-            "code" => 20000
+            'code' => 20000
         ]);
     }
 
@@ -90,12 +108,12 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            "data"=>[
+            'data'=>[
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * (60*24)
             ],
-            "code" => 20000
+            'code' => 20000
         ]);
     }
 }
