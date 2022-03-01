@@ -26,5 +26,19 @@ class RolSeeder extends Seeder
         );
 
         DB::table('roles')->insert($arr);
+
+        $arr = array(
+            array('user_id' => '1', 'rol_id'=> '1', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '2', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '3', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '4', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '5', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '6', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '7', 'enable' => true),
+        );
+
+        DB::table('users_roles')->insert($arr);
+
     }
+
 }
