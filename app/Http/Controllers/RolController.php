@@ -19,6 +19,7 @@ class RolController extends Controller
 
 
         $roles = Rol::where('code','LIKE','%'.$search.'%')
+                ->where('name','LIKE','%'.$search.'%')
                 ->limit($limit)
                 ->offset(($page - 1) * $limit)
                 ->get();
@@ -34,14 +35,18 @@ class RolController extends Controller
 
     }
 
-    public function getone(Request $request)
-    {
-        $rolId = $request->has('id') ? $request->get('id') : 0;
-        $rol = Rol::find($rolId);
-        $rol->aaa = bcrypt("password");
+    public function toggleEnable(Request $request){
+
+        $id = $request->has('id') ? $request->get('id') : 0;
+        $enable = $request->has('enable') ? $request->get('enable') : 0;
+
+        $user = Rol::find($id);
+        $user->enable = $enable;
+        $user->save();
+
 
         return response()->json([
-            "data" => $rol,
+            "data" => $user,
             "code" => 20000
         ]);
 

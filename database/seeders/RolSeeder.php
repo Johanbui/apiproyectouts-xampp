@@ -21,7 +21,8 @@ class RolSeeder extends Seeder
             array('code' => 'USER-EDIT', 'name'=> 'Edit User', 'enable' => true),
             array('code' => 'USER-ONE', 'name'=> 'User', 'enable' => true),
             array('code' => 'USER-KEY', 'name'=> 'Key User', 'enable' => true),
-            array('code' => 'USERS-ROLES-INDEX', 'name'=> 'Index Users Roles', 'enable' => true)
+            array('code' => 'USERS-ROLES-INDEX', 'name'=> 'Index Users Roles', 'enable' => true),
+            array('code' => 'ROL-INDEX', 'name'=> 'Index Roles', 'enable' => true)
         );
 
         DB::table('roles')->insert($arr);

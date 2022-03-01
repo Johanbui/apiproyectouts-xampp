@@ -61,3 +61,11 @@ Route::group([
     Route::get('getRolUser', [\App\Http\Controllers\RolUserController::class, 'getRolUser'])->name('getRolUser');
     Route::put('toggleEnable', [\App\Http\Controllers\RolUserController::class, 'toggleEnable'])->name('toggleEnable');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'rol'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\RolController::class, 'getAll'])->name('getAll');
+    Route::put('toggleEnable', [\App\Http\Controllers\RolController::class, 'toggleEnable'])->name('toggleEnable');
+});
