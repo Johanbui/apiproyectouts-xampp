@@ -18,6 +18,7 @@ class RolUserController extends Controller
         $user_id = $request->has('userId') ? $request->get('userId') : '';
 
         $roles = Rol::where('name','LIKE','%'.$search.'%')
+                ->orWhere('code','LIKE','%'.$search.'%')
                 ->limit($limit)
                 ->offset(($page - 1) * $limit)
                 ->get();
@@ -62,9 +63,16 @@ class RolUserController extends Controller
         $enable = $request->has('enable') ? $request->get('enable') : 0;
 
         $user = UserRol::where("user_id",$userId)->where("rol_id",$rolId)->first();
-        $user->enable = $enable;
-        $user->save();
-
+        if($user){
+            $user->enable = $enable;
+            $user->save();
+        }else{
+           $user = new UserRol;
+           $user->user_id = $userId ;
+           $user->rol_id = $rolId;
+           $user->enable = $enable;
+           $user->save();
+        }
 
         return response()->json([
             "data" => $user,
