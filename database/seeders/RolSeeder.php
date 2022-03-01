@@ -22,7 +22,12 @@ class RolSeeder extends Seeder
             array('code' => 'USER-ONE', 'name'=> 'User', 'enable' => true),
             array('code' => 'USER-KEY', 'name'=> 'Key User', 'enable' => true),
             array('code' => 'USERS-ROLES-INDEX', 'name'=> 'Index Users Roles', 'enable' => true),
-            array('code' => 'ROL-INDEX', 'name'=> 'Index Roles', 'enable' => true)
+            array('code' => 'ROL-INDEX', 'name'=> 'Index Roles', 'enable' => true),
+            array('code' => 'USER-TOGGLE', 'name'=> 'Toggle Users', 'enable' => true),
+            array('code' => 'ROL-TOGGLE', 'name'=> 'Toggle Roles', 'enable' => true),
+            array('code' => 'USERS-ROLES-TOGGLE', 'name'=> 'Toggle User Roles', 'enable' => true),
+
+
         );
 
         DB::table('roles')->insert($arr);
@@ -35,6 +40,9 @@ class RolSeeder extends Seeder
             array('user_id' => '1', 'rol_id'=> '5', 'enable' => true),
             array('user_id' => '1', 'rol_id'=> '6', 'enable' => true),
             array('user_id' => '1', 'rol_id'=> '7', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '8', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '9', 'enable' => true),
+            array('user_id' => '1', 'rol_id'=> '10', 'enable' => true),
         );
 
         DB::table('users_roles')->insert($arr);
