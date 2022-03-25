@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Rol;
-use App\Models\UserRol;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
@@ -46,22 +44,9 @@ class AuthController extends Controller
      */
     public function me()
     {
+
         $user = auth()->user();
-
-        $user_roles = UserRol::where('user_id',$user->id)
-                            ->where('enable',"=",1)
-                            ->get();;
-        $user_roles_obj = [];
-        for ($i=0; $i < count($user_roles); $i++) {
-
-            $rol = Rol::find($user_roles[$i]->rol_id);
-            if($rol->enable == 1){
-                array_push($user_roles_obj, $rol);
-            }
-
-        }
-
-        $user->users_rols = $user_roles_obj;
+        $user->users_rols = $user->rol->permission;
 
         return response()->json([
             'data' => auth()->user(),

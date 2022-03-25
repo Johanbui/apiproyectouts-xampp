@@ -51,7 +51,6 @@ class UserController extends Controller
     {
         $userId = $request->has('id') ? $request->get('id') : 0;
         $user = User::find($userId);
-        $user->aaa = bcrypt("password");
 
         return response()->json([
             "data" => $user,
@@ -71,6 +70,7 @@ class UserController extends Controller
         $avatar = $request->has('avatar') ? $request->get('avatar') : 0;
         $gender = $request->has('gender') ? $request->get('gender') : 0;
         $enable = $request->has('enable') ? $request->get('enable') : 0;
+        $rol_id = $request->has('rol_id') ? $request->get('rol_id') : 0;
 
         $user = User::find($userId);
         $user->name = $name;
@@ -79,6 +79,7 @@ class UserController extends Controller
         $user->avatar = $avatar;
         $user->gender = $gender;
         $user->enable = $enable;
+        $user->rol_id = $rol_id;
         $user->save();
 
         return response()->json([
@@ -118,6 +119,7 @@ class UserController extends Controller
         $user->avatar = $request->get('avatar');
         $user->enable = $request->get('enable');
         $user->gender = $request->get('gender');
+        $user->rol_id = $request->get('rol_id');
         $user->password = Hash::make($request->get('password'));
         $password = $request->get('password');
         $repassword = $request->get('repassword');

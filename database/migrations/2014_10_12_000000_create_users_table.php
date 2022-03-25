@@ -1,10 +1,8 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Hash;
 
 
 class CreateUsersTable extends Migration
@@ -29,17 +27,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
-        $user = new User();
-        $user->name = "Andres";
-        $user->last_name = "Nova";
-        $user->email = "jahiranova@uts.edu.co";
-        $user->avatar = "https://avatars.githubusercontent.com/u/15214301?v=4";
-        $user->gender = 1;
-        $user->enable = 1;
-        $user->password = Hash::make("Uts2022");
-        $user->save();
-
 
     }
 

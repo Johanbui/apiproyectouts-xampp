@@ -51,21 +51,22 @@ Route::group([
 ], function ($router) {
     Route::get('getAll', [\App\Http\Controllers\RolController::class, 'getAll'])->name('getAll');
     Route::get('getOne', [\App\Http\Controllers\RolController::class, 'getOne'])->name('getOne');
-});
-
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'roluser'
-], function ($router) {
-    Route::get('getRolUser', [\App\Http\Controllers\RolUserController::class, 'getRolUser'])->name('getRolUser');
-    Route::put('toggleEnable', [\App\Http\Controllers\RolUserController::class, 'toggleEnable'])->name('toggleEnable');
-});
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'rol'
-], function ($router) {
-    Route::get('getAll', [\App\Http\Controllers\RolController::class, 'getAll'])->name('getAll');
+    Route::put('update', [\App\Http\Controllers\RolController::class, 'update'])->name('update');
+    Route::post('create', [\App\Http\Controllers\RolController::class, 'create'])->name('create');
     Route::put('toggleEnable', [\App\Http\Controllers\RolController::class, 'toggleEnable'])->name('toggleEnable');
+});
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'permission'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\PermissionController::class, 'getAll'])->name('getAll');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'permission'
+], function ($router) {
+    Route::put('update', [\App\Http\Controllers\RolPermissionController::class, 'update'])->name('update');
 });

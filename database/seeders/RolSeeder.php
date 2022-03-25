@@ -16,36 +16,29 @@ class RolSeeder extends Seeder
     {
 
         $arr = array(
-            array('code' => 'USER-INDEX', 'name'=> 'Index Users', 'enable' => true),
-            array('code' => 'USER-CREATE', 'name'=> 'Create User', 'enable' => true),
-            array('code' => 'USER-EDIT', 'name'=> 'Edit User', 'enable' => true),
-            array('code' => 'USER-ONE', 'name'=> 'User', 'enable' => true),
-            array('code' => 'USER-KEY', 'name'=> 'Key User', 'enable' => true),
-            array('code' => 'USERS-ROLES-INDEX', 'name'=> 'Index Users Roles', 'enable' => true),
-            array('code' => 'ROL-INDEX', 'name'=> 'Index Roles', 'enable' => true),
-            array('code' => 'USER-TOGGLE', 'name'=> 'Toggle Users', 'enable' => true),
-            array('code' => 'ROL-TOGGLE', 'name'=> 'Toggle Roles', 'enable' => true),
-            array('code' => 'USERS-ROLES-TOGGLE', 'name'=> 'Toggle User Roles', 'enable' => true),
-
-
+            array('code' => 'COORDINADOR', 'name'=> 'Coordinador', 'enable' => true),
+            array('code' => 'DOCENTE', 'name'=> 'Docente', 'enable' => true),
+            array('code' => 'ESTUDIANTE', 'name'=> 'Estudainte', 'enable' => true),
         );
 
         DB::table('roles')->insert($arr);
 
         $arr = array(
-            array('user_id' => '1', 'rol_id'=> '1', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '2', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '3', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '4', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '5', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '6', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '7', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '8', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '9', 'enable' => true),
-            array('user_id' => '1', 'rol_id'=> '10', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '1', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '2', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '3', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '4', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '5', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '6', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '7', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '8', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '9', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '10', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '11', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '12', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '13', 'enable' => true),
         );
-
-        DB::table('users_roles')->insert($arr);
+        DB::table('roles_permissions')->insert($arr);
 
     }
 
