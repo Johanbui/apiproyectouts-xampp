@@ -37,6 +37,7 @@ class RolSeeder extends Seeder
             array('rol_id' => '1', 'permission_id'=> '11', 'enable' => true),
             array('rol_id' => '1', 'permission_id'=> '12', 'enable' => true),
             array('rol_id' => '1', 'permission_id'=> '13', 'enable' => true),
+            array('rol_id' => '1', 'permission_id'=> '14', 'enable' => true),
         );
         DB::table('roles_permissions')->insert($arr);
 
