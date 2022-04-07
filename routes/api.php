@@ -80,3 +80,19 @@ Route::group([
     Route::put('update', [\App\Http\Controllers\ActaController::class, 'update'])->name('update');
     Route::post('create', [\App\Http\Controllers\ActaController::class, 'create'])->name('create');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'files'
+], function ($router) {
+    Route::post('push', [\App\Http\Controllers\FileController::class, 'push'])->name('push');
+    Route::get('{fileId}', [\App\Http\Controllers\FileController::class, 'getOne'])->name('getOne');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'listas'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\ListaController::class, 'getAll'])->name('getAll');
+    Route::get('getOne', [\App\Http\Controllers\ListaController::class, 'getOne'])->name('getOne');
+});

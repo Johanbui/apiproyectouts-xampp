@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class CreateActaTable extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,13 +16,14 @@ class CreateActaTable extends Migration
      */
     public function up()
     {
-        Schema::create('actas', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo');
-            $table->string('url_archivo');
+            $table->string('name');
+            $table->string('path');
+            $table->string('mime_type');
+            $table->string('size');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -32,6 +33,6 @@ class CreateActaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actas');
+        Schema::dropIfExists('files');
     }
 }

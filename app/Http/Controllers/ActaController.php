@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rol;
 use App\Models\Acta;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class ActaController extends Controller
@@ -19,12 +20,19 @@ class ActaController extends Controller
         $search = $request->has('search') ? $request->get('search') : '';
 
 
-        $actas = Acta::where('url_archivo', 'LIKE', '%' . $search . '%')
+        $actas = Acta::where('codigo', 'LIKE', '%' . $search . '%')
             ->limit($limit)
             ->offset(($page - 1) * $limit)
             ->get();
 
-        $countActas = Acta::where('url_archivo', 'LIKE', '%' . $search . '%')
+        foreach ($actas as $acta) {
+            $id_file = $acta->file_id;
+            $file = File::find($id_file);
+            $file->url = "http://apiproyectouts.local/api/files/".$id_file;
+            $acta->file =  $file;
+        }
+
+        $countActas = Acta::where('codigo', 'LIKE', '%' . $search . '%')
             ->count();
 
         return response()->json([
@@ -38,6 +46,10 @@ class ActaController extends Controller
     {
         $actaId = $request->has('id') ? $request->get('id') : 0;
         $acta = Acta::find($actaId);
+        $id_file = $acta->file_id;
+        $file = File::find($id_file);
+        $file->url = "http://apiproyectouts.local/api/files/".$id_file;
+        $acta->file =  $file;
 
         return response()->json([
             "data" => $acta,
@@ -51,11 +63,11 @@ class ActaController extends Controller
 
         $actaId = $request->has('id') ? $request->get('id') : 0;
         $codigo = $request->has('codigo') ? $request->get('codigo') : 0;
-        $url_archivo = $request->has('url_archivo') ? $request->get('url_archivo') : 0;
+        $file_id = $request->has('file_id') ? $request->get('file_id') : 0;
 
         $acta = Acta::find($actaId);
         $acta->codigo = $codigo;
-        $acta->url_archivo = $url_archivo;
+        $acta->file_id = $file_id;
         $acta->save();
 
         return response()->json([
@@ -69,7 +81,7 @@ class ActaController extends Controller
 
         $acta = new Acta;
         $acta->codigo = $request->get('codigo');
-        $acta->url_archivo = $request->get('url_archivo');
+        $acta->file_id = $request->get('file_id');
         $acta->save();
 
         return response()->json([

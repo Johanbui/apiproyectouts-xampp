@@ -2,12 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Acta extends Model
 {
     use HasFactory;
     protected $table = 'actas';
+    //protected $appends = ['file'];
+
+    /*
+    public function getFileAttribute()
+    {
+        return $this->belongsTo(File::class,'file_id');
+    }
+    */
+
 
 }
