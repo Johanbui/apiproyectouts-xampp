@@ -70,3 +70,13 @@ Route::group([
 ], function ($router) {
     Route::put('update', [\App\Http\Controllers\RolPermissionController::class, 'update'])->name('update');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'acta'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\ActaController::class, 'getAll'])->name('getAll');
+    Route::get('getOne', [\App\Http\Controllers\ActaController::class, 'getOne'])->name('getOne');
+    Route::put('update', [\App\Http\Controllers\ActaController::class, 'update'])->name('update');
+    Route::post('create', [\App\Http\Controllers\ActaController::class, 'create'])->name('create');
+});

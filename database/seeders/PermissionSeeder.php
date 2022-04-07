@@ -36,6 +36,13 @@ class PermissionSeeder extends Seeder
             array('code' => 'ROL-PERMISSION', 'name'=> 'Permiso del Rol'),
             //TRABAJO DE GRADO
             array('code' => 'TRABAJOGRADO-INDEX', 'name'=> 'Trabajo de Grado'),
+            // CRUD ACTAS
+            array('code' => 'ACTA-INDEX', 'name'=> 'Listado de Actas'),
+            array('code' => 'ACTA-CREATE', 'name'=> 'Crear Acta'),
+            array('code' => 'ACTA-EDIT', 'name'=> 'Editar Acta'),
+            array('code' => 'ACTA-TOGGLE', 'name'=> 'Inhabilitar/Habilitar Acta'),
+            array('code' => 'ACTA-ONE', 'name'=> 'Ver Acta '),
+
         );
 
         DB::table('permissions')->insert($arr);
