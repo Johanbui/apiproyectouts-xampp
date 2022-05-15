@@ -43,6 +43,13 @@ class PermissionSeeder extends Seeder
             array('code' => 'ACTA-TOGGLE', 'name'=> 'Inhabilitar/Habilitar Acta'),
             array('code' => 'ACTA-ONE', 'name'=> 'Ver Acta '),
 
+            // CRUD IDEAS
+            array('code' => 'IDEA-INDEX', 'name'=> 'Listado de Ideas'),
+            array('code' => 'IDEA-CREATE', 'name'=> 'Crear Idea'),
+            array('code' => 'IDEA-EDIT', 'name'=> 'Editar Idea'),
+            array('code' => 'IDEA-TOGGLE', 'name'=> 'Inhabilitar/Habilitar Idea'),
+            array('code' => 'IDEA-ONE', 'name'=> 'Ver Idea'),
+
         );
 
         DB::table('permissions')->insert($arr);

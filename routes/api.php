@@ -83,6 +83,17 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
+    'prefix' => 'idea'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\IdeaController::class, 'getAll'])->name('getAll');
+    Route::get('getOne', [\App\Http\Controllers\IdeaController::class, 'getOne'])->name('getOne');
+    Route::put('update', [\App\Http\Controllers\IdeaController::class, 'update'])->name('update');
+    Route::post('create', [\App\Http\Controllers\IdeaController::class, 'create'])->name('create');
+});
+
+
+Route::group([
+    'middleware' => 'api',
     'prefix' => 'files'
 ], function ($router) {
     Route::post('push', [\App\Http\Controllers\FileController::class, 'push'])->name('push');
