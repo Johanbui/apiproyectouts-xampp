@@ -10,6 +10,9 @@ class Acta extends Model
 {
     use HasFactory;
     protected $table = 'actas';
+
+    protected $dates = ['fecha'];
+
     //protected $appends = ['file'];
 
     /*

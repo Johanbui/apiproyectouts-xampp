@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rol;
 use App\Models\Acta;
 use App\Models\File;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ActaController extends Controller
@@ -59,7 +60,8 @@ class ActaController extends Controller
 
     public function update(Request $request)
     {
-
+        $fecha = Carbon::parse( $request->get('fecha'));
+        $fecha = $fecha->format('Y-m-d H:i:s');
 
         $actaId = $request->has('id') ? $request->get('id') : 0;
         $codigo = $request->has('codigo') ? $request->get('codigo') : 0;
@@ -68,6 +70,7 @@ class ActaController extends Controller
         $acta = Acta::find($actaId);
         $acta->codigo = $codigo;
         $acta->file_id = $file_id;
+        $acta->fecha = $fecha;
         $acta->save();
 
         return response()->json([
@@ -78,10 +81,13 @@ class ActaController extends Controller
 
     public function create(Request $request)
     {
+        $fecha = Carbon::parse( $request->get('fecha'));
+        $fecha = $fecha->format('Y-m-d H:i:s');
 
         $acta = new Acta;
         $acta->codigo = $request->get('codigo');
         $acta->file_id = $request->get('file_id');
+        $acta->fecha = $fecha;
         $acta->save();
 
         return response()->json([

@@ -18,7 +18,7 @@ class FileController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:doc,docx,pdf,txt,csv|max:2048',
+            'file' => 'required|mimes:doc,docx,pdf,txt,csv,jpg,png|max:2048',
         ]);
 
         if ($validator->fails()) {
