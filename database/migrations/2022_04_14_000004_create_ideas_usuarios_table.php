@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class CreateIdeasEstadosTable extends Migration
+class CreateIdeasUsuariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateIdeasEstadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('ideas_estados', function (Blueprint $table) {
+        Schema::create('ideas_usuarios', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_idea');
             $table->unsignedBigInteger('id_usuario');
