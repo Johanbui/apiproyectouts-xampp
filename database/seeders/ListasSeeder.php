@@ -28,23 +28,28 @@ class ListasSeeder extends Seeder
         $arr = array(
             array(
                 'id_lista_grupo' => '1', 'nombre' => 'Cédula Ciudadanía',
-                'codigo' => 'CC', 'valor' => '1', 'estado' => true
+                'codigo' => 'CC', 'valor' => '1', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '1', 'nombre' => 'Cédula Extranjería',
-                'codigo' => 'CE', 'valor' => '2', 'estado' => true
+                'codigo' => 'CE', 'valor' => '2', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '1', 'nombre' => 'Nit',
-                'codigo' => 'NIT', 'valor' => '3', 'estado' => true
+                'codigo' => 'NIT', 'valor' => '3', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '2', 'nombre' => 'Desarrollo de Software',
-                'codigo' => 'DESSOF', 'valor' => '1', 'estado' => true
+                'codigo' => 'DESSOF', 'valor' => '1', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '2', 'nombre' => 'Proyecto de Investigación',
-                'codigo' => 'PROINV', 'valor' => '2', 'estado' => true
+                'codigo' => 'PROINV', 'valor' => '2', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '3', 'nombre' => 'Nuevas Tecnologia',
@@ -58,23 +63,28 @@ class ListasSeeder extends Seeder
             ),
             array(
                 'id_lista_grupo' => '4', 'nombre' => 'Tecnologia en Desarrollo de Sistemas Informaticos',
-                'codigo' => 'TDSI', 'valor' => '1', 'estado' => true
+                'codigo' => 'TDSI', 'valor' => '1', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '4', 'nombre' => 'Ingenieria de Sistemas',
-                'codigo' => 'INGS', 'valor' => '2', 'estado' => true
+                'codigo' => 'INGS', 'valor' => '2', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '5', 'nombre' => 'Estudiante',
-                'codigo' => 'EST', 'valor' => '1', 'estado' => true
+                'codigo' => 'EST', 'valor' => '1', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '5', 'nombre' => 'Director',
-                'codigo' => 'DIR', 'valor' => '2', 'estado' => true
+                'codigo' => 'DIR', 'valor' => '2', 'estado' => true,
+                'idPadre' => null
             ),
             array(
                 'id_lista_grupo' => '5', 'nombre' => 'CO/Director',
-                'codigo' => 'CODIR', 'valor' => '3', 'estado' => true
+                'codigo' => 'CODIR', 'valor' => '3', 'estado' => true,
+                'idPadre' => null
             )
         );
         DB::table('listas')->insert($arr);
