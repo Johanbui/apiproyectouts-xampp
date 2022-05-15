@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class CreateListaGrupoTable extends Migration
+class AlterCoordinacionUser extends Migration
 {
     /**
      * Run the migrations.
@@ -16,13 +16,14 @@ class CreateListaGrupoTable extends Migration
      */
     public function up()
     {
-        Schema::create('listas_grupos', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->string('codigo');
-            $table->boolean('estado');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_coordinacion')->default(1);
         });
+
+        Schema::table('ideas', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_coordinacion')->default(1);
+        });
+
 
     }
 
@@ -33,6 +34,6 @@ class CreateListaGrupoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lista_grupo');
+        // Schema::dropIfExists('actas');
     }
 }

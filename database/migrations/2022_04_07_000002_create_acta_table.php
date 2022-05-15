@@ -19,6 +19,7 @@ class CreateActaTable extends Migration
         Schema::create('actas', function (Blueprint $table) {
             $table->id();
             $table->string('codigo');
+            $table->dateTime('fecha');
             $table->unsignedBigInteger('file_id')->default(1);
             $table->foreign('file_id')->references('id')->on('files');
             $table->timestamps();

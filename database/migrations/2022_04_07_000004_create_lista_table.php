@@ -16,14 +16,14 @@ class CreateListaTable extends Migration
      */
     public function up()
     {
-        Schema::create('lista', function (Blueprint $table) {
+        Schema::create('listas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idListaGrupo')->default(null);
+            $table->unsignedBigInteger('id_lista_grupo')->default(null);
             $table->string('nombre');
             $table->string('codigo');
             $table->string('valor');
             $table->boolean('estado');
-            $table->foreign('idListaGrupo')->references('id')->on('lista_grupo');
+            $table->foreign('id_lista_grupo')->references('id')->on('listas_grupos');
             $table->timestamps();
         });
 
