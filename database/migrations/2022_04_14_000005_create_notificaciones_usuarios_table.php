@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class CreateListaGrupoTable extends Migration
+class CreateNotificacionesUsuariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,15 +16,14 @@ class CreateListaGrupoTable extends Migration
      */
     public function up()
     {
-        Schema::create('listas_grupos', function (Blueprint $table) {
+        Schema::create('notificaciones_usuarios', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('codigo');
-            $table->unsignedBigInteger('idPadre')->nullable()->default(null);
-            $table->boolean('estado');
+            $table->unsignedBigInteger('id_notificacion');
+            $table->unsignedBigInteger('id_usuario');
+            $table->foreign('id_notificacion')->references('id')->on('notificaciones')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -34,6 +33,6 @@ class CreateListaGrupoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lista_grupo');
+        Schema::dropIfExists('notificaciones');
     }
 }

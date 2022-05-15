@@ -20,11 +20,11 @@ class CreateIdeaTable extends Migration
             $table->id();
             $table->string('titulo');
             $table->unsignedBigInteger('modalidad')->default(1);
-            $table->unsignedBigInteger('id_docente')->default(1);
+            // $table->unsignedBigInteger('id_docente')->default(1);
             $table->unsignedBigInteger('linea_investigacion')->default(1);
             $table->integer('max_estudiantes')->default(1);
-            $table->unsignedBigInteger('id_director');
-            $table->unsignedBigInteger('id_codirector');
+            // $table->unsignedBigInteger('id_director');
+            // $table->unsignedBigInteger('id_codirector');
             $table->timestamps();
         });
 
