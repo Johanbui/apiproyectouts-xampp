@@ -20,6 +20,7 @@ class CreateListaGrupoTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('codigo');
+            $table->unsignedBigInteger('idPadre')->nullable()->default(null);
             $table->boolean('estado');
             $table->timestamps();
         });
