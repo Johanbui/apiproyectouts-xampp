@@ -23,7 +23,8 @@ class CreateListaTable extends Migration
             $table->string('codigo');
             $table->string('valor');
             $table->boolean('estado');
-            $table->foreign('id_lista_grupo')->references('id')->on('listas_grupos');
+            $table->unsignedBigInteger('idPadre')->nullable()->default(null);
+            $table->foreign('idListaGrupo')->references('id')->on('lista_grupo');
             $table->timestamps();
         });
 
