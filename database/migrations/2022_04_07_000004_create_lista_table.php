@@ -18,7 +18,7 @@ class CreateListaTable extends Migration
     {
         Schema::create('listas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_lista_grupo')->default(null);
+            $table->unsignedBigInteger('idListaGrupo')->default(null);
             $table->string('nombre');
             $table->string('codigo');
             $table->string('valor');
