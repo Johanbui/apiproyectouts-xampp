@@ -19,6 +19,7 @@ class ListasSeeder extends Seeder
             array('nombre' => 'Tipos de Documento', 'codigo' => 'TIPDOC', 'estado' => true),
             array('nombre' => 'Modalidad Trabajo de Grado', 'codigo' => 'MODGRA', 'estado' => true),
             array('nombre' => 'Linea Investigación', 'codigo' => 'LININV', 'estado' => true),
+            array('nombre' => 'Coordinaciones', 'codigo' => 'COORD', 'estado' => true),
 
         );
 
@@ -52,6 +53,14 @@ class ListasSeeder extends Seeder
             array(
                 'id_lista_grupo' => '3', 'nombre' => 'Desarrollo de Software Orientado a la WEB',
                 'codigo' => 'DESOWEB', 'valor' => '2', 'estado' => true
+            ),
+            array(
+                'id_lista_grupo' => '4', 'nombre' => 'Tecnologia en Desarrollo de Sistemas Informaticos',
+                'codigo' => 'TDSI', 'valor' => '1', 'estado' => true
+            ),
+            array(
+                'id_lista_grupo' => '4', 'nombre' => 'Ingenieria de Sistemas',
+                'codigo' => 'INGS', 'valor' => '2', 'estado' => true
             ),
         );
         DB::table('listas')->insert($arr);
