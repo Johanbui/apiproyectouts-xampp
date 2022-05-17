@@ -89,6 +89,8 @@ Route::group([
     Route::get('getOne', [\App\Http\Controllers\IdeaController::class, 'getOne'])->name('getOne');
     Route::put('update', [\App\Http\Controllers\IdeaController::class, 'update'])->name('update');
     Route::post('create', [\App\Http\Controllers\IdeaController::class, 'create'])->name('create');
+    Route::get('getModalidades', [\App\Http\Controllers\IdeaController::class, 'getModalidades'])->name('getModalidades');
+    Route::get('getLineasInvestigacion', [\App\Http\Controllers\IdeaController::class, 'getLineasInvestigacion'])->name('getLineasInvestigacion');
 });
 
 

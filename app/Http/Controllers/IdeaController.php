@@ -6,22 +6,28 @@ use App\Models\Rol;
 use App\Models\Acta;
 use App\Models\File;
 use App\Models\Idea;
+use App\Models\Lista;
+use App\Models\ListaGrupo;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
 {
-    public function __construct()
-    {
-    }
 
     public function getAll(Request $request)
     {
-        $page = $request->has('page') ? $request->get('page') : 1;
         $limit = $request->has('limit') ? $request->get('limit') : 99999999999999;
-        $search = $request->has('search') ? $request->get('search') : '';
 
-
-        $actas = Idea::limit($limit)
+        $actas = Idea::query()
+            ->select(
+                'ideas.id',
+                'titulo',
+                'max_estudiantes',
+                'listas.nombre AS nombreModalidad',
+                'listas2.nombre AS nombreLineaInvestigacion'
+            )
+            ->join('listas', 'ideas.modalidad', '=', 'listas.id')
+            ->join('listas AS listas2', 'ideas.linea_investigacion', '=', 'listas2.id')
+            ->limit($limit)
             ->get();
 
         $countActas = Idea::count();
@@ -35,43 +41,42 @@ class IdeaController extends Controller
 
     public function getone(Request $request)
     {
-        $actaId = $request->has('id') ? $request->get('id') : 0;
-        $acta = Idea::find($actaId);
-        $id_file = $acta->file_id;
-        $file = File::find($id_file);
-        $file->url = "http://apiproyectouts.local/api/files/".$id_file;
-        $acta->file =  $file;
+        $ideaId = $request->has('id') ? $request->get('id') : 0;
+        $idea = Idea::find($ideaId);
 
         return response()->json([
-            "data" => $acta,
+            "data" => $idea,
             "code" => 20000
         ]);
     }
 
     public function update(Request $request)
     {
+        $idIdea = $request->has('id') ? $request->get('id') : 0;
+        $titulo = $request->has('titulo') ? $request->get('titulo') : '';
+        $modalidad = $request->has('modalidad') ? $request->get('modalidad') : 1;
+        $linea_investigacion = $request->has('linea_investigacion') ? $request->get('linea_investigacion') : 1;
+        $max_estudiantes = $request->has('max_estudiantes') ? $request->get('max_estudiantes') : 1;
 
-
-        $actaId = $request->has('id') ? $request->get('id') : 0;
-        $codigo = $request->has('codigo') ? $request->get('codigo') : 0;
-        $file_id = $request->has('file_id') ? $request->get('file_id') : 0;
-
-        $acta = Idea::find($actaId);
-        $acta->codigo = $codigo;
-        $acta->file_id = $file_id;
-        $acta->save();
+        $idea = Idea::find($idIdea);
+        $idea->titulo = $titulo;
+        $idea->modalidad = $modalidad;
+        $idea->linea_investigacion = $linea_investigacion;
+        $idea->max_estudiantes = $max_estudiantes;
+        $idea->save();
 
         return response()->json([
-            "data" => $acta,
+            "data" => $idea,
             "code" => 20000
         ]);
     }
 
     public function create(Request $request)
     {
-
         $acta = new Idea;
         $acta->titulo = $request->get('titulo');
+        $acta->modalidad = $request->get('modalidad');
+        $acta->linea_investigacion = $request->get('linea_investigacion');
         $acta->max_estudiantes = $request->get('max_estudiantes');
         $acta->save();
 
@@ -81,7 +86,32 @@ class IdeaController extends Controller
             "message" => "Created Succefully!",
             "type" => "success"
         ]);
+    }
 
+    public function getModalidades()
+    {
+        $idListaGrupo = ListaGrupo::where('codigo', 'MODGRA')->first();
+        $listas = Lista::where('id_lista_grupo', $idListaGrupo->id)->get();
+
+        return response()->json([
+            "data" => $listas,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+
+    public function getLineasInvestigacion()
+    {
+        $idListaGrupo = ListaGrupo::where('codigo', 'LININV')->first();
+        $listas = Lista::where('id_lista_grupo', $idListaGrupo->id)->get();
+
+        return response()->json([
+            "data" => $listas,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
     }
 
 }

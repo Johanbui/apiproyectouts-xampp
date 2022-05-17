@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ListaGrupo extends Model
 {
     use HasFactory;
-    protected $table = 'lista_grupo';
+    protected $table = 'listas_grupos';
 
 }
