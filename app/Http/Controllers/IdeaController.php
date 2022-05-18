@@ -8,6 +8,7 @@ use App\Models\File;
 use App\Models\Idea;
 use App\Models\Lista;
 use App\Models\ListaGrupo;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -16,6 +17,7 @@ class IdeaController extends Controller
     public function getAll(Request $request)
     {
         $limit = $request->has('limit') ? $request->get('limit') : 99999999999999;
+        $id_coordinacion = auth()->user()->id_coordinacion;
 
         $actas = Idea::query()
             ->select(
@@ -27,6 +29,7 @@ class IdeaController extends Controller
             )
             ->join('listas', 'ideas.modalidad', '=', 'listas.id')
             ->join('listas AS listas2', 'ideas.linea_investigacion', '=', 'listas2.id')
+            ->where('id_coordinacion', $id_coordinacion)
             ->limit($limit)
             ->get();
 
@@ -105,6 +108,26 @@ class IdeaController extends Controller
     {
         $idListaGrupo = ListaGrupo::where('codigo', 'LININV')->first();
         $listas = Lista::where('id_lista_grupo', $idListaGrupo->id)->get();
+
+        return response()->json([
+            "data" => $listas,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+
+    public function getDirectores()
+    {
+        $listas = User::query()
+            ->select(
+                'users.id',
+                'users.name',
+                'users.last_name'
+            )
+            ->join('roles', 'roles.id', '=', 'users.rol_id')
+            ->where('roles.code', 'DOCENTE')
+            ->get();
 
         return response()->json([
             "data" => $listas,

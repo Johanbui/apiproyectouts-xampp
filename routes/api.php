@@ -91,6 +91,7 @@ Route::group([
     Route::post('create', [\App\Http\Controllers\IdeaController::class, 'create'])->name('create');
     Route::get('getModalidades', [\App\Http\Controllers\IdeaController::class, 'getModalidades'])->name('getModalidades');
     Route::get('getLineasInvestigacion', [\App\Http\Controllers\IdeaController::class, 'getLineasInvestigacion'])->name('getLineasInvestigacion');
+    Route::get('getDirectores', [\App\Http\Controllers\IdeaController::class, 'getDirectores'])->name('getDirectores');
 });
 
 
