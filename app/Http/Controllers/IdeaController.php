@@ -142,19 +142,16 @@ class IdeaController extends Controller
     public function createArchivoIdeas(Request $request)
     {
 
-        $IdeasArchivos =    IdeasArchivos::
-        where('id_codigo_archivo',$request->get('id_codigo_archivo'))->
-        where("id_idea",$request->get('id_idea'))->first();
+        $IdeasArchivos =    IdeasArchivos::where('id_codigo_archivo', $request->get('id_codigo_archivo'))->where("id_idea", $request->get('id_idea'))->first();
 
         $ideasArchivos = new IdeasArchivos;
         $ideasArchivos->id_idea = $request->get('id_idea');
         $ideasArchivos->id_codigo_archivo = $request->get('id_codigo_archivo');
         $ideasArchivos->id_archivo = $request->get('id_archivo');
 
-        if($IdeasArchivos == null){
+        if ($IdeasArchivos == null) {
             $ideasArchivos->save();
-        }else{
-            $IdeasArchivos->id_archivo = $request->get('id_archivo');
+        } else {
             $IdeasArchivos->save();
         }
 
@@ -173,21 +170,19 @@ class IdeaController extends Controller
         $codigoListaGrupo = $request->get('codigoListaGrupo');
         $idIdea = $request->get('idIdea');
 
-        $listaGrupo = ListaGrupo::where('codigo',$codigoListaGrupo)->first();
+        $listaGrupo = ListaGrupo::where('codigo', $codigoListaGrupo)->first();
         $idListaGrupo = $listaGrupo->id;
-        $listas = Lista::where('id_lista_grupo',$idListaGrupo)->get();
+        $listas = Lista::where('id_lista_grupo', $idListaGrupo)->get();
 
-        for ($i=0; $i < count($listas); $i++) {
+        for ($i = 0; $i < count($listas); $i++) {
             $lista =  $listas[$i];
-            $IdeasArchivos =    IdeasArchivos::
-                                where('id_codigo_archivo',$lista->id)->
-                                where("id_idea",$idIdea)
-            ->first();
-            if($IdeasArchivos != null){
+            $IdeasArchivos =    IdeasArchivos::where('id_codigo_archivo', $lista->id)->where("id_idea", $idIdea)
+                ->first();
+            if ($IdeasArchivos != null) {
 
                 $id_file = $IdeasArchivos->id_archivo;
                 $file = File::find($id_file);
-                $file->url = "http://apiproyectouts.local/api/files/".$id_file;
+                $file->url = "http://apiproyectouts.local/api/files/" . $id_file;
                 $IdeasArchivos->file = $file;
                 array_push($response, $IdeasArchivos);
             }
@@ -203,18 +198,16 @@ class IdeaController extends Controller
     public function createUsuariosIdeas(Request $request)
     {
 
-        $IdeasUsuarios =    IdeasUsuarios::
-        where('tipoUsuario',$request->get('tipoUsuario'))->
-        where("id_idea",$request->get('id_idea'))->first();
+        $IdeasUsuarios =    IdeasUsuarios::where('tipoUsuario', $request->get('tipoUsuario'))->where("id_idea", $request->get('id_idea'))->first();
 
         $ideasUsuarios = new IdeasUsuarios;
         $ideasUsuarios->id_idea = $request->get('id_idea');
         $ideasUsuarios->id_usuario = $request->get('id_usuario');
         $ideasUsuarios->tipoUsuario = $request->get('tipoUsuario');
 
-        if($IdeasUsuarios == null){
+        if ($IdeasUsuarios == null) {
             $ideasUsuarios->save();
-        }else{
+        } else {
             $IdeasUsuarios->id_usuario = $request->get('id_usuario');
             $IdeasUsuarios->save();
         }
@@ -234,24 +227,24 @@ class IdeaController extends Controller
         $codigoListaGrupo = $request->get('codigoListaGrupo');
         $idIdea = $request->get('idIdea');
 
-        $listaGrupo = ListaGrupo::where('codigo',$codigoListaGrupo)->first();
+        $listaGrupo = ListaGrupo::where('codigo', $codigoListaGrupo)->first();
         $idListaGrupo = $listaGrupo->id;
-        $listas = Lista::where('id_lista_grupo',$idListaGrupo)->get();
+        $listas = Lista::where('id_lista_grupo', $idListaGrupo)->get();
 
-        for ($i=0; $i < count($listas); $i++) {
+        for ($i = 0; $i < count($listas); $i++) {
             $lista =  $listas[$i];
-            $IdeasUsuarios =    IdeasUsuarios::
-                                where('tipoUsuario',$lista->id)->
-                                where("id_idea",$idIdea)
-                                ->first();
+            $IdeasUsuarios =    IdeasUsuarios::where('tipoUsuario', $lista->id)->where("id_idea", $idIdea)
+                ->get();
 
-            if($IdeasUsuarios != null){
-                $IdeasUsuarios->tipoUsuarioObj = $lista;
-                $user = User::find($IdeasUsuarios->id_usuario);
-                $IdeasUsuarios->id_usuarioObj = $user;
-                array_push($response, $IdeasUsuarios);
+            for ($j = 0; $j < count($IdeasUsuarios); $j++) {
+                $IdeaUsu = $IdeasUsuarios[$j];
+                if ($IdeaUsu != null) {
+                    $IdeaUsu->tipoUsuarioObj = $lista;
+                    $user = User::find($IdeaUsu->id_usuario);
+                    $IdeaUsu->id_usuarioObj = $user;
+                    array_push($response, $IdeaUsu);
+                }
             }
-
         }
         return response()->json([
             "data" => $response,
@@ -261,4 +254,54 @@ class IdeaController extends Controller
         ]);
     }
 
+
+    public function getEstudiantes()
+    {
+        $listas = User::query()
+            ->select(
+                'users.id',
+                'users.name',
+                'users.last_name'
+            )
+            ->join('roles', 'roles.id', '=', 'users.rol_id')
+            ->where('roles.code', 'ESTUDIANTE')
+            ->get();
+
+        return response()->json([
+            "data" => $listas,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+    public function createEstudiantesIdeas(Request $request)
+    {
+        $estudiantes =  $request->get('estudiantes');
+        $id_idea =  $request->get('idIdea');
+
+        for ($i = 0; $i < count($estudiantes); $i++) {
+            $estudiante = json_decode($estudiantes[$i]);
+
+            $IdeasUsuarios =    IdeasUsuarios::where('tipoUsuario', $estudiante->tipoUsuario)->where('id_usuario', $estudiante->id)->where("id_idea", $id_idea)->first();
+
+            $ideasUsuarios = new IdeasUsuarios;
+            $ideasUsuarios->id_idea = $id_idea;
+            $ideasUsuarios->id_usuario = $estudiante->id;
+            $ideasUsuarios->tipoUsuario = $estudiante->tipoUsuario;
+
+            if ($IdeasUsuarios == null) {
+                $ideasUsuarios->save();
+            } else {
+                $IdeasUsuarios->save();
+            }
+        }
+
+
+        return response()->json([
+            "data" => $IdeasUsuarios,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
 }

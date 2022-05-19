@@ -96,6 +96,8 @@ Route::group([
     Route::get('getArchivoIdeas', [\App\Http\Controllers\IdeaController::class, 'getArchivoIdeas'])->name('getArchivoIdeas');
     Route::post('createUsuariosIdeas', [\App\Http\Controllers\IdeaController::class, 'createUsuariosIdeas'])->name('createUsuariosIdeas');
     Route::get('getUsuariosIdeas', [\App\Http\Controllers\IdeaController::class, 'getUsuariosIdeas'])->name('getUsuariosIdeas');
+    Route::get('getEstudiantes', [\App\Http\Controllers\IdeaController::class, 'getEstudiantes'])->name('getEstudiantes');
+    Route::post('createEstudiantesIdeas', [\App\Http\Controllers\IdeaController::class, 'createEstudiantesIdeas'])->name('createEstudiantesIdeas');
 
 });
 
