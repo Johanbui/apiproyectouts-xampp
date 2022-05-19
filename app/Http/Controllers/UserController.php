@@ -71,6 +71,7 @@ class UserController extends Controller
         $gender = $request->has('gender') ? $request->get('gender') : 0;
         $enable = $request->has('enable') ? $request->get('enable') : 0;
         $rol_id = $request->has('rol_id') ? $request->get('rol_id') : 0;
+        $id_coordinacion = $request->has('id_coordinacion') ? $request->get('id_coordinacion') : 0;
 
         $user = User::find($userId);
         $user->name = $name;
@@ -80,6 +81,7 @@ class UserController extends Controller
         $user->gender = $gender;
         $user->enable = $enable;
         $user->rol_id = $rol_id;
+        $user->id_coordinacion = $id_coordinacion;
         $user->save();
 
         return response()->json([

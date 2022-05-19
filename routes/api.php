@@ -92,6 +92,11 @@ Route::group([
     Route::get('getModalidades', [\App\Http\Controllers\IdeaController::class, 'getModalidades'])->name('getModalidades');
     Route::get('getLineasInvestigacion', [\App\Http\Controllers\IdeaController::class, 'getLineasInvestigacion'])->name('getLineasInvestigacion');
     Route::get('getDirectores', [\App\Http\Controllers\IdeaController::class, 'getDirectores'])->name('getDirectores');
+    Route::post('createArchivoIdeas', [\App\Http\Controllers\IdeaController::class, 'createArchivoIdeas'])->name('createArchivoIdeas');
+    Route::get('getArchivoIdeas', [\App\Http\Controllers\IdeaController::class, 'getArchivoIdeas'])->name('getArchivoIdeas');
+    Route::post('createUsuariosIdeas', [\App\Http\Controllers\IdeaController::class, 'createUsuariosIdeas'])->name('createUsuariosIdeas');
+    Route::get('getUsuariosIdeas', [\App\Http\Controllers\IdeaController::class, 'getUsuariosIdeas'])->name('getUsuariosIdeas');
+
 });
 
 

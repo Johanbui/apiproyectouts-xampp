@@ -6,10 +6,12 @@ use App\Models\Rol;
 use App\Models\Acta;
 use App\Models\File;
 use App\Models\Idea;
+use App\Models\User;
 use App\Models\Lista;
 use App\Models\ListaGrupo;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\IdeasArchivos;
+use App\Models\IdeasUsuarios;
 
 class IdeaController extends Controller
 {
@@ -131,6 +133,128 @@ class IdeaController extends Controller
 
         return response()->json([
             "data" => $listas,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+
+    public function createArchivoIdeas(Request $request)
+    {
+
+        $IdeasArchivos =    IdeasArchivos::
+        where('id_codigo_archivo',$request->get('id_codigo_archivo'))->
+        where("id_idea",$request->get('id_idea'))->first();
+
+        $ideasArchivos = new IdeasArchivos;
+        $ideasArchivos->id_idea = $request->get('id_idea');
+        $ideasArchivos->id_codigo_archivo = $request->get('id_codigo_archivo');
+        $ideasArchivos->id_archivo = $request->get('id_archivo');
+
+        if($IdeasArchivos == null){
+            $ideasArchivos->save();
+        }else{
+            $IdeasArchivos->id_archivo = $request->get('id_archivo');
+            $IdeasArchivos->save();
+        }
+
+        return response()->json([
+            "data" => $ideasArchivos,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+
+    public function getArchivoIdeas(Request $request)
+    {
+        $response = [];
+
+        $codigoListaGrupo = $request->get('codigoListaGrupo');
+        $idIdea = $request->get('idIdea');
+
+        $listaGrupo = ListaGrupo::where('codigo',$codigoListaGrupo)->first();
+        $idListaGrupo = $listaGrupo->id;
+        $listas = Lista::where('id_lista_grupo',$idListaGrupo)->get();
+
+        for ($i=0; $i < count($listas); $i++) {
+            $lista =  $listas[$i];
+            $IdeasArchivos =    IdeasArchivos::
+                                where('id_codigo_archivo',$lista->id)->
+                                where("id_idea",$idIdea)
+            ->first();
+            if($IdeasArchivos != null){
+
+                $id_file = $IdeasArchivos->id_archivo;
+                $file = File::find($id_file);
+                $file->url = "http://apiproyectouts.local/api/files/".$id_file;
+                $IdeasArchivos->file = $file;
+                array_push($response, $IdeasArchivos);
+            }
+        }
+        return response()->json([
+            "data" => $response,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+
+    public function createUsuariosIdeas(Request $request)
+    {
+
+        $IdeasUsuarios =    IdeasUsuarios::
+        where('tipoUsuario',$request->get('tipoUsuario'))->
+        where("id_idea",$request->get('id_idea'))->first();
+
+        $ideasUsuarios = new IdeasUsuarios;
+        $ideasUsuarios->id_idea = $request->get('id_idea');
+        $ideasUsuarios->id_usuario = $request->get('id_usuario');
+        $ideasUsuarios->tipoUsuario = $request->get('tipoUsuario');
+
+        if($IdeasUsuarios == null){
+            $ideasUsuarios->save();
+        }else{
+            $IdeasUsuarios->id_usuario = $request->get('id_usuario');
+            $IdeasUsuarios->save();
+        }
+
+        return response()->json([
+            "data" => $IdeasUsuarios,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+
+    public function getUsuariosIdeas(Request $request)
+    {
+        $response = [];
+
+        $codigoListaGrupo = $request->get('codigoListaGrupo');
+        $idIdea = $request->get('idIdea');
+
+        $listaGrupo = ListaGrupo::where('codigo',$codigoListaGrupo)->first();
+        $idListaGrupo = $listaGrupo->id;
+        $listas = Lista::where('id_lista_grupo',$idListaGrupo)->get();
+
+        for ($i=0; $i < count($listas); $i++) {
+            $lista =  $listas[$i];
+            $IdeasUsuarios =    IdeasUsuarios::
+                                where('tipoUsuario',$lista->id)->
+                                where("id_idea",$idIdea)
+                                ->first();
+
+            if($IdeasUsuarios != null){
+                $IdeasUsuarios->tipoUsuarioObj = $lista;
+                $user = User::find($IdeasUsuarios->id_usuario);
+                $IdeasUsuarios->id_usuarioObj = $user;
+                array_push($response, $IdeasUsuarios);
+            }
+
+        }
+        return response()->json([
+            "data" => $response,
             "code" => 20000,
             "message" => "Created Succefully!",
             "type" => "success"

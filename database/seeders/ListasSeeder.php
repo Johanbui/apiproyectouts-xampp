@@ -21,6 +21,9 @@ class ListasSeeder extends Seeder
             array('nombre' => 'Linea Investigación', 'codigo' => 'LININV', 'estado' => true),
             array('nombre' => 'Coordinaciones', 'codigo' => 'COORD', 'estado' => true),
             array('nombre' => 'Tipos Usuario Ideas', 'codigo' => 'TIPIDU', 'estado' => true),
+            array('nombre' => 'Formatos Propuesta', 'codigo' => 'FRTOPRO', 'estado' => true),
+            array('nombre' => 'Formatos Informe Final', 'codigo' => 'FRTOFIN', 'estado' => true),
+            array('nombre' => 'Aprobacion Idea', 'codigo' => 'APRIDEA', 'estado' => true),
         );
 
         DB::table('listas_grupos')->insert($arr);
@@ -85,7 +88,47 @@ class ListasSeeder extends Seeder
                 'id_lista_grupo' => '5', 'nombre' => 'CO/Director',
                 'codigo' => 'CODIR', 'valor' => '3', 'estado' => true,
                 'idPadre' => null
-            )
+            ),
+            array(
+                'id_lista_grupo' => '6', 'nombre' => 'F-DC-124',
+                'codigo' => 'FDC124', 'valor' => '1', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-125 - Informe Final',
+                'codigo' => 'FDC125', 'valor' => '1', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-129 - Rejilla de Evaluación',
+                'codigo' => 'FDC129', 'valor' => '2', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-01 - Licencia de Autorización Interna',
+                'codigo' => 'FGC01', 'valor' => '3', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-02 - Ficha de Metadatos',
+                'codigo' => 'FGC02', 'valor' => '4', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Exposición Trabajo de Grado',
+                'codigo' => 'EXP01', 'valor' => '5', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Otros Archivos de Sustentación',
+                'codigo' => 'OTROS', 'valor' => '6', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '8', 'nombre' => 'Pago Modalidad',
+                'codigo' => 'PAGMOD', 'valor' => '1', 'estado' => true,
+                'idPadre' => null
+            ),
         );
         DB::table('listas')->insert($arr);
     }

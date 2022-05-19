@@ -47,7 +47,7 @@ class ListaController extends Controller
         $codigoListaGrupo = $request->has('codigo') ? $request->get('codigo') : 0;
         $listaGrupo = ListaGrupo::where('codigo',$codigoListaGrupo)->first();
         $idListaGrupo = $listaGrupo->id;
-        $listas = Lista::where('idListaGrupo',$idListaGrupo)->get();
+        $listas = Lista::where('id_lista_grupo',$idListaGrupo)->get();
         return response()->json([
             "data" => $listas,
             "code" => 20000

@@ -17,11 +17,11 @@ class AlterCoordinacionUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_coordinacion')->default(1);
+            $table->unsignedBigInteger('id_coordinacion')->default(9);
         });
 
         Schema::table('ideas', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_coordinacion')->default(1);
+            $table->unsignedBigInteger('id_coordinacion')->default(9);
         });
 
 

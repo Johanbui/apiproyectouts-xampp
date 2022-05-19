@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RolSeeder::class,
             ListasSeeder::class,
+            IdeasSeeder::class,
         ]);
         \App\Models\User::factory(10)->create();
 
