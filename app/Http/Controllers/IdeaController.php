@@ -163,6 +163,26 @@ class IdeaController extends Controller
         ]);
     }
 
+    public function createArchivoIdeasEvaluacion(Request $request)
+    {
+        $IdeasArchivos = IdeasArchivos::query()
+            ->where('id_codigo_archivo', $request->get('id_codigo_archivo'))
+            ->where("id_idea", $request->get('id_idea'))
+            ->where("id_archivo", $request->get('id_file_propuesta'))
+            ->first();
+
+
+        $IdeasArchivos->id_file_confirmation = $request->get('id_archivo');
+        $IdeasArchivos->save();
+
+        return response()->json([
+            "data" => $IdeasArchivos,
+            "code" => 20000,
+            "message" => "Created Succefully!",
+            "type" => "success"
+        ]);
+    }
+
     public function getArchivoIdeas(Request $request)
     {
         $response = [];
@@ -171,12 +191,14 @@ class IdeaController extends Controller
         $idIdea = $request->get('idIdea');
 
         $listaGrupo = ListaGrupo::where('codigo', $codigoListaGrupo)->first();
+
         $idListaGrupo = $listaGrupo->id;
         $listas = Lista::where('id_lista_grupo', $idListaGrupo)->get();
 
+
         for ($i = 0; $i < count($listas); $i++) {
             $lista =  $listas[$i];
-            $IdeasArchivos =    IdeasArchivos::where('id_codigo_archivo', $lista->id)->where("id_idea", $idIdea)
+            $IdeasArchivos = IdeasArchivos::where('id_codigo_archivo', $lista->id)->where("id_idea", $idIdea)
                 ->first();
             if ($IdeasArchivos != null) {
 
@@ -184,6 +206,14 @@ class IdeaController extends Controller
                 $file = File::find($id_file);
                 $file->url = "http://apiproyectouts.local/api/files/" . $id_file;
                 $IdeasArchivos->file = $file;
+
+                $id_file_confirmation = $IdeasArchivos->id_file_confirmation;
+                if ($id_file_confirmation) {
+                    $fileConfirmation = File::find($id_file_confirmation);
+                    $file->url = "http://apiproyectouts.local/api/files/" . $id_file_confirmation;
+                    $IdeasArchivos->fileConfirmation = $fileConfirmation;
+                }
+
                 array_push($response, $IdeasArchivos);
             }
         }
@@ -282,7 +312,10 @@ class IdeaController extends Controller
         for ($i = 0; $i < count($estudiantes); $i++) {
             $estudiante = json_decode($estudiantes[$i]);
 
-            $IdeasUsuarios =    IdeasUsuarios::where('tipoUsuario', $estudiante->tipoUsuario)->where('id_usuario', $estudiante->id)->where("id_idea", $id_idea)->first();
+            $IdeasUsuarios = IdeasUsuarios::where('tipoUsuario', $estudiante->tipoUsuario)
+            ->where('id_usuario', $estudiante->id)
+            ->where("id_idea", $id_idea)
+            ->first();
 
             $ideasUsuarios = new IdeasUsuarios;
             $ideasUsuarios->id_idea = $id_idea;
