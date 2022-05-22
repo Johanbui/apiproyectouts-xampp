@@ -306,7 +306,7 @@ class IdeaController extends Controller
         ->leftJoin('ideas_usuarios', 'users.id', '=', 'ideas_usuarios.id_usuario')
         ->where('roles.code', 'ESTUDIANTE')
         ->groupBy('users.id')
-        ->havingRaw('cant = 0')
+        //->havingRaw('cant = 0')
 
         ->get();
 
