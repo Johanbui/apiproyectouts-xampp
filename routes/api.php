@@ -99,6 +99,10 @@ Route::group([
     Route::get('getUsuariosIdeas', [\App\Http\Controllers\IdeaController::class, 'getUsuariosIdeas'])->name('getUsuariosIdeas');
     Route::get('getEstudiantes', [\App\Http\Controllers\IdeaController::class, 'getEstudiantes'])->name('getEstudiantes');
     Route::post('createEstudiantesIdeas', [\App\Http\Controllers\IdeaController::class, 'createEstudiantesIdeas'])->name('createEstudiantesIdeas');
+    Route::post('createArrArchivoIdeas', [\App\Http\Controllers\IdeaController::class, 'createArrArchivoIdeas'])->name('createArrArchivoIdeas');
+    Route::post('createArrArchivoIdeasEvaluacion', [\App\Http\Controllers\IdeaController::class, 'createArrArchivoIdeasEvaluacion'])->name('createArrArchivoIdeasEvaluacion');
+    Route::get('getArrArchivoIdeas', [\App\Http\Controllers\IdeaController::class, 'getArrArchivoIdeas'])->name('getArrArchivoIdeas');
+    Route::get('getIdeaUsuario', [\App\Http\Controllers\IdeaController::class, 'getIdeaUsuario'])->name('getIdeaUsuario');
 
 });
 
@@ -108,6 +112,7 @@ Route::group([
     'prefix' => 'files'
 ], function ($router) {
     Route::post('push', [\App\Http\Controllers\FileController::class, 'push'])->name('push');
+    Route::post('pushLista', [\App\Http\Controllers\FileController::class, 'pushLista'])->name('pushLista');
     Route::get('{fileId}', [\App\Http\Controllers\FileController::class, 'getOne'])->name('getOne');
 });
 
