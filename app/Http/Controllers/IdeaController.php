@@ -517,7 +517,6 @@ class IdeaController extends Controller
             ->first();
 
         if ($idCodigoEstado) {
-            info($idCodigoEstado->id);
             $id_idea = $request->get('id_idea');
 
             $response = IdeaEstado::firstOrCreate(

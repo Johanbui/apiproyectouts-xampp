@@ -9,6 +9,6 @@ class IdeaEstado extends Model
 {
     use HasFactory;
     protected $table = 'ideas_estados';
-    protected $fillable = ['id_idea', 'id_codigo_estado', 'comentario'];
+    protected $fillable = ['id_idea', 'id_codigo_estado','id_acta', 'comentario'];
 
 }
