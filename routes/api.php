@@ -103,7 +103,6 @@ Route::group([
     Route::post('createArrArchivoIdeasEvaluacion', [\App\Http\Controllers\IdeaController::class, 'createArrArchivoIdeasEvaluacion'])->name('createArrArchivoIdeasEvaluacion');
     Route::get('getArrArchivoIdeas', [\App\Http\Controllers\IdeaController::class, 'getArrArchivoIdeas'])->name('getArrArchivoIdeas');
     Route::get('getIdeaUsuario', [\App\Http\Controllers\IdeaController::class, 'getIdeaUsuario'])->name('getIdeaUsuario');
-
 });
 
 
@@ -122,4 +121,11 @@ Route::group([
 ], function ($router) {
     Route::get('getAll', [\App\Http\Controllers\ListaController::class, 'getAll'])->name('getAll');
     Route::get('getOne', [\App\Http\Controllers\ListaController::class, 'getOne'])->name('getOne');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'ideaEstado'
+], function ($router) {
+    Route::post('createIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'createIdeaEstado'])->name('createIdeaEstado');
 });

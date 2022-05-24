@@ -6,6 +6,7 @@ use App\Models\Rol;
 use App\Models\Acta;
 use App\Models\File;
 use App\Models\Idea;
+use App\Models\IdeaEstado;
 use App\Models\User;
 use App\Models\Lista;
 use App\Models\ListaGrupo;
@@ -494,6 +495,52 @@ class IdeaController extends Controller
         ]);
     }
 
+    public function createIdeaEstado(Request $request)
+    {
+        $acta = $request->get('acta');
+info($acta);
+        $validateacta = Acta::query()
+            ->where('codigo', $acta)
+            ->doesntExist();
 
+        if ($validateacta) {
+            return response()->json([
+                "data" => false,
+                "exist" => false,
+                "code" => 20000,
+                "message" => "Acta no existe!",
+                "type" => "success"
+            ]);
+        }
+
+        $codigo_estado = $request->get('codigo_estado');
+
+        $idCodigoEstado = Lista::query()
+            ->where('codigo', $codigo_estado)
+            ->first();
+
+        if ($idCodigoEstado) {
+            info($idCodigoEstado->id);
+            $id_idea = $request->get('id_idea');
+
+            $response = IdeaEstado::firstOrCreate(
+                [
+                    'id_idea' => $id_idea,
+                    'id_codigo_estado' => $idCodigoEstado->id
+                ],
+                ['comentario' => 1233333333]
+            );
+
+            return response()->json([
+                "data" => $response,
+                "exist" => true,
+                "code" => 20000,
+                "message" => "Created Succefully!",
+                "type" => "success"
+            ]);
+        }
+
+
+    }
 
 }
