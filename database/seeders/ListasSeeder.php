@@ -157,8 +157,18 @@ class ListasSeeder extends Seeder
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto',
-                'codigo' => 'SELIDEA', 'valor' => '6', 'estado' => true,
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto Prorroga',
+                'codigo' => 'PROEIDEA', 'valor' => '6', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto Aprobado',
+                'codigo' => 'APREIDEA', 'valor' => '7', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto Cancelado',
+                'codigo' => 'CANEIDEA', 'valor' => '8', 'estado' => true,
                 'idPadre' => null
             ),
         );

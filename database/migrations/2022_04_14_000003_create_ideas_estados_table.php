@@ -21,6 +21,7 @@ class CreateIdeasEstadosTable extends Migration
             $table->unsignedBigInteger('id_idea');
             $table->unsignedBigInteger('id_codigo_estado');
             $table->unsignedBigInteger('comentario');
+            $table->unsignedBigInteger('id_acta');
             $table->foreign('id_idea')->references('id')->on('ideas')->onDelete('cascade');
             $table->foreign('id_codigo_estado')->references('id')->on('listas')->onDelete('cascade');
             $table->timestamps();
