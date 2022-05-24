@@ -498,12 +498,9 @@ class IdeaController extends Controller
     public function createIdeaEstado(Request $request)
     {
         $acta = $request->get('acta');
-info($acta);
-        $validateacta = Acta::query()
-            ->where('codigo', $acta)
-            ->doesntExist();
+        $actaObj = Acta::where('codigo', $acta)->first();
 
-        if ($validateacta) {
+        if (!$actaObj) {
             return response()->json([
                 "data" => false,
                 "exist" => false,
@@ -526,9 +523,10 @@ info($acta);
             $response = IdeaEstado::firstOrCreate(
                 [
                     'id_idea' => $id_idea,
-                    'id_codigo_estado' => $idCodigoEstado->id
+                    'id_codigo_estado' => $idCodigoEstado->id,
+                    'id_acta' => $actaObj->id
                 ],
-                ['comentario' => 1233333333]
+                ['comentario' => ""]
             );
 
             return response()->json([
