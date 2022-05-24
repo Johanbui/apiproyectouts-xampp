@@ -6,14 +6,16 @@ use App\Models\Rol;
 use App\Models\Acta;
 use App\Models\File;
 use App\Models\Idea;
-use App\Models\IdeaEstado;
 use App\Models\User;
 use App\Models\Lista;
+use App\Models\IdeaEstado;
 use App\Models\ListaGrupo;
 use Illuminate\Http\Request;
 use App\Models\IdeasArchivos;
 use App\Models\IdeasUsuarios;
+use App\Models\Notificaciones;
 use Illuminate\Support\Facades\DB;
+use App\Models\NotificacionesUsuarios;
 
 class IdeaController extends Controller
 {
@@ -26,7 +28,7 @@ class IdeaController extends Controller
         $actas = Idea::query()
             ->select(
                 DB::raw(
-                'ideas.id,
+                    'ideas.id,
                 titulo,
                 max_estudiantes,
                 listas.nombre AS nombreModalidad,
@@ -298,18 +300,18 @@ class IdeaController extends Controller
     public function getEstudiantes()
     {
         $listas = User::query()
-        ->select(
-            DB::raw(
-            'users.id,users.name,users.last_name,count(ideas_usuarios.id_usuario) as cant'
+            ->select(
+                DB::raw(
+                    'users.id,users.name,users.last_name,count(ideas_usuarios.id_usuario) as cant'
+                )
             )
-        )
-        ->join('roles', 'roles.id', '=', 'users.rol_id')
-        ->leftJoin('ideas_usuarios', 'users.id', '=', 'ideas_usuarios.id_usuario')
-        ->where('roles.code', 'ESTUDIANTE')
-        ->groupBy('users.id')
-        //->havingRaw('cant = 0')
+            ->join('roles', 'roles.id', '=', 'users.rol_id')
+            ->leftJoin('ideas_usuarios', 'users.id', '=', 'ideas_usuarios.id_usuario')
+            ->where('roles.code', 'ESTUDIANTE')
+            ->groupBy('users.id')
+            //->havingRaw('cant = 0')
 
-        ->get();
+            ->get();
 
         return response()->json([
             "data" => $listas,
@@ -363,24 +365,23 @@ class IdeaController extends Controller
         for ($i = 0; $i < count($archivos); $i++) {
             $archivo = json_decode($archivos[$i]);
 
-            if($archivo->id_file!=null){
+            if ($archivo->id_file != null) {
                 $IdeasArchivos =    IdeasArchivos::where('id_codigo_archivo', $archivo->id_codigo_archivo)
-                ->where("id_idea", $id_idea)
-                ->first();
+                    ->where("id_idea", $id_idea)
+                    ->first();
 
-            $ideasArchivos = new IdeasArchivos;
-            $ideasArchivos->id_idea = $id_idea;
-            $ideasArchivos->id_codigo_archivo = $archivo->id_codigo_archivo;
-            $ideasArchivos->id_archivo = $archivo->id_file;
+                $ideasArchivos = new IdeasArchivos;
+                $ideasArchivos->id_idea = $id_idea;
+                $ideasArchivos->id_codigo_archivo = $archivo->id_codigo_archivo;
+                $ideasArchivos->id_archivo = $archivo->id_file;
 
-            if ($IdeasArchivos == null) {
-                $ideasArchivos->save();
-            } else {
-                $IdeasArchivos->id_archivo = $archivo->id_file;
-                $IdeasArchivos->save();
+                if ($IdeasArchivos == null) {
+                    $ideasArchivos->save();
+                } else {
+                    $IdeasArchivos->id_archivo = $archivo->id_file;
+                    $IdeasArchivos->save();
+                }
             }
-            }
-
         }
 
         return response()->json([
@@ -400,12 +401,12 @@ class IdeaController extends Controller
         for ($i = 0; $i < count($archivos); $i++) {
             $archivo = json_decode($archivos[$i]);
 
-            if($archivo->id_file_propuesta!=null){
+            if ($archivo->id_file_propuesta != null) {
 
-            $IdeasArchivos =
-                IdeasArchivos::where('id_codigo_archivo', $archivo->id_codigo_archivo)
-                ->where("id_idea", $id_idea)
-                ->first();
+                $IdeasArchivos =
+                    IdeasArchivos::where('id_codigo_archivo', $archivo->id_codigo_archivo)
+                    ->where("id_idea", $id_idea)
+                    ->first();
 
 
                 $IdeasArchivos->id_file_confirmation = $archivo->id_file_propuesta;
@@ -414,7 +415,7 @@ class IdeaController extends Controller
         }
 
         return response()->json([
-            "data" =>"",
+            "data" => "",
             "code" => 20000,
             "message" => "Created Succefully!",
             "type" => "success"
@@ -453,26 +454,25 @@ class IdeaController extends Controller
                     $fileConfirmation = File::find($id_file_confirmation);
                     $file->url = "http://apiproyectouts.local/api/files/" . $id_file_confirmation;
                     $IdeasArchivos->fileConfirmation = $fileConfirmation;
-                }else{
+                } else {
                     $IdeasArchivos->fileConfirmation = null;
                 }
-                $IdeasArchivos->listaNombre =$lista->nombre;
+                $IdeasArchivos->listaNombre = $lista->nombre;
 
                 array_push($response, $IdeasArchivos);
-            }else{
+            } else {
                 $IdeasArchivo = new IdeasArchivos();
                 $IdeasArchivo->id_codigo_archivo = $lista->id;
                 $IdeasArchivo->id_codigo_archivo = $lista->id;
                 $IdeasArchivo->id_file =  null;
                 $IdeasArchivo->id_file_propuesta =  null;
-                $IdeasArchivo->id_file_confirmation=  null;
+                $IdeasArchivo->id_file_confirmation =  null;
                 $IdeasArchivo->file = null;
                 $IdeasArchivo->id = null;
                 $IdeasArchivo->fileConfirmation = null;
-                $IdeasArchivo->listaNombre =$lista->nombre;
+                $IdeasArchivo->listaNombre = $lista->nombre;
                 array_push($response, $IdeasArchivo);
             }
-
         }
         return response()->json([
             "data" => $response,
@@ -484,10 +484,9 @@ class IdeaController extends Controller
 
     public function getIdeaUsuario(Request $request)
     {
-        $id_usuario = $request->get('id_usuario') ;
+        $id_usuario = $request->get('id_usuario');
 
-        $IdeasUsuarios = IdeasUsuarios::
-                where("id_usuario",$id_usuario )->first();
+        $IdeasUsuarios = IdeasUsuarios::where("id_usuario", $id_usuario)->first();
 
         return response()->json([
             "data" => $IdeasUsuarios,
@@ -500,7 +499,10 @@ class IdeaController extends Controller
         $acta = $request->get('acta');
         $actaObj = Acta::where('codigo', $acta)->first();
 
-        if (!$actaObj) {
+        if (!$actaObj && trim($acta) !== "") {
+
+            return "aaa";
+
             return response()->json([
                 "data" => false,
                 "exist" => false,
@@ -523,10 +525,12 @@ class IdeaController extends Controller
                 [
                     'id_idea' => $id_idea,
                     'id_codigo_estado' => $idCodigoEstado->id,
-                    'id_acta' => $actaObj->id
+                    'id_acta' => ($actaObj) ? $actaObj->id : 0
                 ],
                 ['comentario' => ""]
             );
+
+            $this->crearNotificacion($response);
 
             return response()->json([
                 "data" => $response,
@@ -557,30 +561,24 @@ class IdeaController extends Controller
             ->where('codigo', $codigo_estado)
             ->first();
 
-        if ($idCodigoEstado || $codigo_estado=="RESULTADO") {
+        if ($idCodigoEstado || $codigo_estado == "RESULTADO") {
 
             $id_idea = $request->get('id_idea');
             $response = null;
-            $SQL = IdeaEstado::where( 'id_idea', $id_idea);
+            $SQL = IdeaEstado::where('id_idea', $id_idea);
 
-            if($codigo_estado!="PROEIDEA"
-            && $codigo_estado!="APREIDEA"
-            && $codigo_estado!="CANEIDEA"
-            && $codigo_estado!="RESULTADO"
+            if (
+                $codigo_estado != "PROEIDEA"
+                && $codigo_estado != "APREIDEA"
+                && $codigo_estado != "CANEIDEA"
+                && $codigo_estado != "RESULTADO"
+            ) {
 
-            ){
-                $response = $SQL->where( 'id_codigo_estado', $idCodigoEstado->id)
-                ->first();
-                $response->codigoEstado = $idCodigoEstado->codigo;
-
-            }else{
-                $response =  $SQL->whereIn( 'id_codigo_estado', [26,27,28])
-                ->first();
-
-                if($response){
-                    $idCodigoEstado2 = Lista::find( $response->id_codigo_estado);
-                    $response->codigoEstado = $idCodigoEstado2->codigo;
-                }else{
+                $response = $SQL->where('id_codigo_estado', $idCodigoEstado->id)
+                    ->first();
+                if ($response) {
+                    $response->codigoEstado = $idCodigoEstado->codigo;
+                } else {
                     return response()->json([
                         "data" => null,
                         "exist" => false,
@@ -589,12 +587,25 @@ class IdeaController extends Controller
                         "type" => "success"
                     ]);
                 }
+            } else {
+                $response =  $SQL->whereIn('id_codigo_estado', [26, 27, 28])
+                    ->first();
 
+                if ($response) {
+                    $idCodigoEstado2 = Lista::find($response->id_codigo_estado);
+                    $response->codigoEstado = $idCodigoEstado2->codigo;
+                } else {
+                    return response()->json([
+                        "data" => null,
+                        "exist" => false,
+                        "code" => 20000,
+                        "message" => "No existe Estado",
+                        "type" => "success"
+                    ]);
+                }
             }
 
-
-
-            if($response){
+            if ($response) {
                 return response()->json([
                     "data" => $response,
                     "exist" => true,
@@ -610,7 +621,6 @@ class IdeaController extends Controller
                 "message" => "No existe Estado",
                 "type" => "success"
             ]);
-
         }
 
         return response()->json([
@@ -622,4 +632,44 @@ class IdeaController extends Controller
         ]);
     }
 
+    public function crearNotificacion(IdeaEstado $ideaEstado)
+    {
+
+        $idea = Idea::find($ideaEstado->id_idea);
+        $tituloIdea = $idea->titulo;
+
+        $lista = Lista::find($ideaEstado->id_codigo_estado);
+
+        $notificacion =  new Notificaciones();
+
+        $response = $notificacion::firstOrCreate(
+            [
+                'tipo'  => 1,
+                "valor" => $ideaEstado->id_codigo_estado
+            ],
+            [
+                'icon'  => "",
+                "html" => "",
+                "url" => "",
+                'title' => "La idea " . $tituloIdea . " Se le asigno el estado en " . $lista->nombre,
+                "visto" => false
+            ]
+        );
+        if ($response->wasRecentlyCreated === true) {
+
+            $ideasUsuarios = IdeasUsuarios::where("id_idea", $ideaEstado->id_idea)->get();
+
+            for ($i = 0; $i < count($ideasUsuarios); $i++) {
+                $notificacionUsuario = new NotificacionesUsuarios();
+
+                $notificacionUsuario::firstOrCreate(
+                    [
+                        'id_notificacion'  => $response->id,
+                        'id_usuario' => $ideasUsuarios[$i]->id_usuario,
+                    ]
+                );
+            }
+        }
+        return  $response;
+    }
 }

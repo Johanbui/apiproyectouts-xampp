@@ -23,7 +23,8 @@ class CreateNotificacionesTable extends Migration
             $table->longtext('html');
             $table->string('url');
             $table->unsignedBigInteger('tipo');
-            $table->dateTime('fecha');
+            $table->boolean('visto');
+            $table->boolean('valor');
             $table->timestamps();
         });
     }
