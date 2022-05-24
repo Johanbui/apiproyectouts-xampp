@@ -546,4 +546,80 @@ class IdeaController extends Controller
         ]);
     }
 
+
+    public function getIdeaEstado(Request $request)
+    {
+
+
+        $codigo_estado = $request->get('codigo_estado');
+
+        $idCodigoEstado = Lista::query()
+            ->where('codigo', $codigo_estado)
+            ->first();
+
+        if ($idCodigoEstado || $codigo_estado=="RESULTADO") {
+
+            $id_idea = $request->get('id_idea');
+            $response = null;
+            $SQL = IdeaEstado::where( 'id_idea', $id_idea);
+
+            if($codigo_estado!="PROEIDEA"
+            && $codigo_estado!="APREIDEA"
+            && $codigo_estado!="CANEIDEA"
+            && $codigo_estado!="RESULTADO"
+
+            ){
+                $response = $SQL->where( 'id_codigo_estado', $idCodigoEstado->id)
+                ->first();
+                $response->codigoEstado = $idCodigoEstado->codigo;
+
+            }else{
+                $response =  $SQL->whereIn( 'id_codigo_estado', [26,27,28])
+                ->first();
+
+                if($response){
+                    $idCodigoEstado2 = Lista::find( $response->id_codigo_estado);
+                    $response->codigoEstado = $idCodigoEstado2->codigo;
+                }else{
+                    return response()->json([
+                        "data" => null,
+                        "exist" => false,
+                        "code" => 20000,
+                        "message" => "No existe Estado",
+                        "type" => "success"
+                    ]);
+                }
+
+            }
+
+
+
+            if($response){
+                return response()->json([
+                    "data" => $response,
+                    "exist" => true,
+                    "code" => 20000,
+                    "message" => "Created Succefully!",
+                    "type" => "success"
+                ]);
+            }
+            return response()->json([
+                "data" => null,
+                "exist" => false,
+                "code" => 20000,
+                "message" => "No existe Estado",
+                "type" => "success"
+            ]);
+
+        }
+
+        return response()->json([
+            "data" => null,
+            "exist" => false,
+            "code" => 20000,
+            "message" => "No existe Estado",
+            "type" => "success"
+        ]);
+    }
+
 }

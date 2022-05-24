@@ -128,4 +128,6 @@ Route::group([
     'prefix' => 'ideaEstado'
 ], function ($router) {
     Route::post('createIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'createIdeaEstado'])->name('createIdeaEstado');
+    Route::get('getIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'getIdeaEstado'])->name('getIdeaEstado');
+
 });
