@@ -24,6 +24,7 @@ class ListasSeeder extends Seeder
             array('nombre' => 'Formatos Propuesta', 'codigo' => 'FRTOPRO', 'estado' => true),
             array('nombre' => 'Formatos Informe Final', 'codigo' => 'FRTOFIN', 'estado' => true),
             array('nombre' => 'Aprobacion Idea', 'codigo' => 'APRIDEA', 'estado' => true),
+            array('nombre' => 'Estados Idea', 'codigo' => 'ESTIDEA', 'estado' => true),
         );
 
         DB::table('listas_grupos')->insert($arr);
@@ -127,6 +128,37 @@ class ListasSeeder extends Seeder
             array(
                 'id_lista_grupo' => '8', 'nombre' => 'Pago Modalidad',
                 'codigo' => 'PAGMOD', 'valor' => '1', 'estado' => true,
+                'idPadre' => null
+            ),
+
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Aprobacion de Idea',
+                'codigo' => 'APRIDEA', 'valor' => '1', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Propuesta de Idea',
+                'codigo' => 'PROIDEA', 'valor' => '2', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Evaluacion de Propuesta de Idea',
+                'codigo' => 'EVPROIDEA', 'valor' => '3', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Informe Final',
+                'codigo' => 'INFFIN', 'valor' => '4', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Evaluacion Informe Final',
+                'codigo' => 'EVINFFIN', 'valor' => '5', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto',
+                'codigo' => 'SELIDEA', 'valor' => '6', 'estado' => true,
                 'idPadre' => null
             ),
         );
