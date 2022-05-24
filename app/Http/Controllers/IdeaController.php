@@ -540,7 +540,13 @@ info($acta);
             ]);
         }
 
-
+        return response()->json([
+            "data" => false,
+            "exist" => true,
+            "code" => 20000,
+            "message" => "No existe Estado",
+            "type" => "success"
+        ]);
     }
 
 }
