@@ -129,5 +129,12 @@ Route::group([
 ], function ($router) {
     Route::post('createIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'createIdeaEstado'])->name('createIdeaEstado');
     Route::get('getIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'getIdeaEstado'])->name('getIdeaEstado');
+});
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'notificacion'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\NotificationController::class, 'getAll'])->name('getAll');
+    Route::get('markAsReaded', [\App\Http\Controllers\NotificationController::class, 'markAsReaded'])->name('markAsReaded');
 });

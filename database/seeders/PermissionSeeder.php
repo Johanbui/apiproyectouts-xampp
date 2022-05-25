@@ -36,6 +36,8 @@ class PermissionSeeder extends Seeder
             array('code' => 'ROL-PERMISSION', 'name'=> 'Permiso del Rol'),
             //TRABAJO DE GRADO
             array('code' => 'TRABAJOGRADO-INDEX', 'name'=> 'Trabajo de Grado'),
+            // NOTIFICACIONES
+            array('code' => 'NOTIFICACIONES-INDEX', 'name' => 'Notificaciones'),
             // CRUD ACTAS
             array('code' => 'ACTA-INDEX', 'name'=> 'Listado de Actas'),
             array('code' => 'ACTA-CREATE', 'name'=> 'Crear Acta'),

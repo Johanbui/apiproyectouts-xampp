@@ -39,5 +39,15 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Rol::class);
     }
 
-
+    public function notificaciones()
+    {
+        return $this->hasManyThrough(
+            'App\Models\Notificaciones',
+            'notificacion',
+            'notificaciones',
+            'id_notificacion',
+            'id_usuario',
+            'id_usuario'
+        );
+    }
 }

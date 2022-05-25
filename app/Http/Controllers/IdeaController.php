@@ -651,7 +651,7 @@ class IdeaController extends Controller
                 'icon'  => "",
                 "html" => "",
                 "url" => "",
-                'title' => "La idea " . $tituloIdea . " Se le asigno el estado en " . $lista->nombre,
+                'title' => "La idea " . $tituloIdea . " Se le asignó el estado en " . $lista->nombre,
                 "visto" => false
             ]
         );
