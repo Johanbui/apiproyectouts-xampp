@@ -16,7 +16,7 @@ class NotificationController extends Controller
             ->join('notificaciones_usuarios', 'notificaciones.id', '=', 'notificaciones_usuarios.id_notificacion')
             ->where([
                 ['id_usuario', $id_usuario],
-                ['visto', 0]
+                //['visto', 0]
             ])
             ->get();
 
