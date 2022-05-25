@@ -672,4 +672,37 @@ class IdeaController extends Controller
         }
         return  $response;
     }
+
+
+    public function getResultadoProyecto(Request $request)
+    {
+
+
+        $id_idea = $request->get('id_idea');
+        $SQL = IdeaEstado::where('id_idea', $id_idea);
+
+
+        $response =  $SQL->whereIn('id_codigo_estado', [26, 27, 28])
+            ->first();
+
+        if ($response) {
+            $idCodigoEstado2 = Lista::find($response->id_codigo_estado);
+            $response->codigoEstado = $idCodigoEstado2->codigo;
+            return response()->json([
+                "data" => $response,
+                "exist" => true,
+                "code" => 20000,
+                "message" => "Created Succefully!",
+                "type" => "success"
+            ]);
+        } else {
+            return response()->json([
+                "data" => null,
+                "exist" => false,
+                "code" => 20000,
+                "message" => "No existe Estado",
+                "type" => "success"
+            ]);
+        }
+    }
 }

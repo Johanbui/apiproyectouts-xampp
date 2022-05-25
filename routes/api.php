@@ -129,6 +129,7 @@ Route::group([
 ], function ($router) {
     Route::post('createIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'createIdeaEstado'])->name('createIdeaEstado');
     Route::get('getIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'getIdeaEstado'])->name('getIdeaEstado');
+    Route::get('getResultadoProyecto', [\App\Http\Controllers\IdeaController::class, 'getResultadoProyecto'])->name('getResultadoProyecto');
 });
 
 Route::group([
