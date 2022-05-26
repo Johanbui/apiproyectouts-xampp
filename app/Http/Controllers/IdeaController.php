@@ -325,29 +325,22 @@ class IdeaController extends Controller
         $estudiantes =  $request->get('estudiantes');
         $id_idea =  $request->get('idIdea');
 
+        $response = [ ];
         for ($i = 0; $i < count($estudiantes); $i++) {
             $estudiante = json_decode($estudiantes[$i]);
-
-            $IdeasUsuarios = IdeasUsuarios::where('tipoUsuario', $estudiante->tipoUsuario)
-                ->where('id_usuario', $estudiante->id)
-                ->where("id_idea", $id_idea)
-                ->first();
-
-            $ideasUsuarios = new IdeasUsuarios;
-            $ideasUsuarios->id_idea = $id_idea;
-            $ideasUsuarios->id_usuario = $estudiante->id;
-            $ideasUsuarios->tipoUsuario = $estudiante->tipoUsuario;
-
-            if ($IdeasUsuarios == null) {
-                $ideasUsuarios->save();
-            } else {
-                $IdeasUsuarios->save();
-            }
+            $IdeasUsuarios = IdeasUsuarios::firstOrCreate(
+                [
+                    'id_idea'  => $id_idea,
+                    "id_usuario" => $estudiante->id,
+                    "tipoUsuario" => $estudiante->tipoUsuario
+                ]
+            );
+            array_push($response ,$IdeasUsuarios);
         }
 
 
         return response()->json([
-            "data" => $IdeasUsuarios,
+            "data" => $response,
             "code" => 20000,
             "message" => "Created Succefully!",
             "type" => "success"
@@ -684,6 +677,35 @@ class IdeaController extends Controller
 
         $response =  $SQL->whereIn('id_codigo_estado', [26, 27, 28])
             ->first();
+
+        if ($response) {
+            $idCodigoEstado2 = Lista::find($response->id_codigo_estado);
+            $response->codigoEstado = $idCodigoEstado2->codigo;
+            return response()->json([
+                "data" => $response,
+                "exist" => true,
+                "code" => 20000,
+                "message" => "Created Succefully!",
+                "type" => "success"
+            ]);
+        } else {
+            return response()->json([
+                "data" => null,
+                "exist" => false,
+                "code" => 20000,
+                "message" => "No existe Estado",
+                "type" => "success"
+            ]);
+        }
+    }
+
+    public function getLastEstadoProyecto(Request $request)
+    {
+
+
+        $id_idea = $request->get('id_idea');
+        $SQL = IdeaEstado::where('id_idea', $id_idea);
+        $response =  $SQL->latest()->first();
 
         if ($response) {
             $idCodigoEstado2 = Lista::find($response->id_codigo_estado);

@@ -103,6 +103,7 @@ Route::group([
     Route::post('createArrArchivoIdeasEvaluacion', [\App\Http\Controllers\IdeaController::class, 'createArrArchivoIdeasEvaluacion'])->name('createArrArchivoIdeasEvaluacion');
     Route::get('getArrArchivoIdeas', [\App\Http\Controllers\IdeaController::class, 'getArrArchivoIdeas'])->name('getArrArchivoIdeas');
     Route::get('getIdeaUsuario', [\App\Http\Controllers\IdeaController::class, 'getIdeaUsuario'])->name('getIdeaUsuario');
+    Route::get('getLastEstadoProyecto', [\App\Http\Controllers\IdeaController::class, 'getLastEstadoProyecto'])->name('getLastEstadoProyecto');
 });
 
 
