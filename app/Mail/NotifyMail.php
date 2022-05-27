@@ -19,10 +19,10 @@ class NotifyMail extends Mailable
      *
      * @return void
      */
-    public function __construct($params, $subject)
+    public function __construct($params, $asunto)
     {
         $this->params = $params;
-        $this->subject = $subject;
+        $this->subject = $asunto;
     }
 
     /**

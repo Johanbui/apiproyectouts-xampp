@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SendEmailController;
 
 
 /*
@@ -142,5 +141,3 @@ Route::group([
     Route::get('getAll', [\App\Http\Controllers\NotificationController::class, 'getAll'])->name('getAll');
     Route::get('markAsReaded', [\App\Http\Controllers\NotificationController::class, 'markAsReaded'])->name('markAsReaded');
 });
-
-Route::get('send-email', [SendEmailController::class, 'index']);

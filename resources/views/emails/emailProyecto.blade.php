@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Test email to {{ $params['email'] }}</title>
+    <title>Test email to</title>
 </head>
 <body>
 
- <h1>Probando {{ $params['email'] }}</h1>
+    {{ $params['cuerpo'] }}
 
 </body>
 </html>

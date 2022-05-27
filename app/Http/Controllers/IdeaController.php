@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifyMail;
 use App\Models\Rol;
 use App\Models\Acta;
 use App\Models\File;
@@ -16,6 +17,7 @@ use App\Models\IdeasUsuarios;
 use App\Models\Notificaciones;
 use Illuminate\Support\Facades\DB;
 use App\Models\NotificacionesUsuarios;
+use Illuminate\Support\Facades\Mail;
 
 class IdeaController extends Controller
 {
@@ -648,6 +650,7 @@ class IdeaController extends Controller
                 "visto" => false
             ]
         );
+
         if ($response->wasRecentlyCreated === true) {
 
             $ideasUsuarios = IdeasUsuarios::where("id_idea", $ideaEstado->id_idea)->get();
@@ -663,7 +666,32 @@ class IdeaController extends Controller
                 );
             }
         }
+
+        $emailsUsuarios = IdeasUsuarios::query()
+            ->select('email')
+            ->join('users', 'ideas_usuarios.id_usuario', '=', 'users.id')
+            ->where('id_idea', $ideaEstado->id_idea)
+            ->pluck('email')
+            ->all();
+
+        foreach ($emailsUsuarios as $email) {
+            $this->enviarCorreo($email, 'Asunto generico', 'Cuerpo generico');
+        }
+
         return  $response;
+    }
+
+    public function enviarCorreo($email, $asunto, $cuerpo)
+    {
+        $arrayInfo['cuerpo'] = $cuerpo;
+
+        Mail::to($email)->send(new NotifyMail($arrayInfo, $asunto));
+
+        if (Mail::failures()) {
+            return response()->Fail('Sorry! Please try again latter');
+        } else {
+            return null;
+        }
     }
 
 
