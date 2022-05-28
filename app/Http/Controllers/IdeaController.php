@@ -492,6 +492,7 @@ class IdeaController extends Controller
     public function createIdeaEstado(Request $request)
     {
         $acta = $request->get('acta');
+        $comentario = $request->get('comentario') ?? '';
         $actaObj = Acta::where('codigo', $acta)->first();
 
         if (!$actaObj && trim($acta) !== "") {
@@ -520,9 +521,12 @@ class IdeaController extends Controller
                 [
                     'id_idea' => $id_idea,
                     'id_codigo_estado' => $idCodigoEstado->id,
-                    'id_acta' => ($actaObj) ? $actaObj->id : 0
+                    'id_acta' => ($actaObj) ? $actaObj->id : 0,
+                    'id_idea' => $id_idea,
                 ],
-                ['comentario' => ""]
+                [
+                    'comentario' => $comentario
+                ]
             );
 
             $this->crearNotificacion($response);
