@@ -327,7 +327,7 @@ class IdeaController extends Controller
         $estudiantes =  $request->get('estudiantes');
         $id_idea =  $request->get('idIdea');
 
-        $response = [ ];
+        $response = [];
         for ($i = 0; $i < count($estudiantes); $i++) {
             $estudiante = json_decode($estudiantes[$i]);
             $IdeasUsuarios = IdeasUsuarios::firstOrCreate(
@@ -337,7 +337,7 @@ class IdeaController extends Controller
                     "tipoUsuario" => $estudiante->tipoUsuario
                 ]
             );
-            array_push($response ,$IdeasUsuarios);
+            array_push($response, $IdeasUsuarios);
         }
 
 
@@ -640,7 +640,7 @@ class IdeaController extends Controller
         $lista = Lista::find($ideaEstado->id_codigo_estado);
 
         $notificacion =  new Notificaciones();
-
+        $asunto = "La idea " . $tituloIdea . " Se le asignó el estado en " . $lista->nombre;
         $response = $notificacion::firstOrCreate(
             [
                 'tipo'  => 1,
@@ -650,7 +650,7 @@ class IdeaController extends Controller
                 'icon'  => "",
                 "html" => "",
                 "url" => "",
-                'title' => "La idea " . $tituloIdea . " Se le asignó el estado en " . $lista->nombre,
+                'title' => $asunto,
                 "visto" => false
             ]
         );
@@ -669,19 +669,19 @@ class IdeaController extends Controller
                     ]
                 );
             }
+            if ($ideaEstado->comentario != "") {
+
+                $emailsUsuarios = IdeasUsuarios::query()
+                    ->select('email')
+                    ->join('users', 'ideas_usuarios.id_usuario', '=', 'users.id')
+                    ->where('id_idea', $ideaEstado->id_idea)
+                    ->pluck('email')
+                    ->all();
+                foreach ($emailsUsuarios as $email) {
+                    $this->enviarCorreo($email,  $asunto, $ideaEstado->comentario);
+                }
+            }
         }
-
-        $emailsUsuarios = IdeasUsuarios::query()
-            ->select('email')
-            ->join('users', 'ideas_usuarios.id_usuario', '=', 'users.id')
-            ->where('id_idea', $ideaEstado->id_idea)
-            ->pluck('email')
-            ->all();
-
-        foreach ($emailsUsuarios as $email) {
-            $this->enviarCorreo($email, 'Asunto generico', 'Cuerpo generico');
-        }
-
         return  $response;
     }
 
