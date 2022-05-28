@@ -51,7 +51,7 @@ class ListasSeeder extends Seeder
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '2', 'nombre' => 'Proyecto de Investigación',
+                'id_lista_grupo' => '2', 'nombre' => 'Trabajo de Investigación',
                 'codigo' => 'PROINV', 'valor' => '2', 'estado' => true,
                 'idPadre' => null
             ),
@@ -157,18 +157,33 @@ class ListasSeeder extends Seeder
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto Prorroga',
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Trabajo de Grado en Prorroga',
                 'codigo' => 'PROEIDEA', 'valor' => '6', 'estado' => true,
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto Aprobado',
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Trabajo de Grado en Aprobado',
                 'codigo' => 'APREIDEA', 'valor' => '7', 'estado' => true,
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '9', 'nombre' => 'Resultado Proyecto Cancelado',
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Trabajo de Grado en Cancelado',
                 'codigo' => 'CANEIDEA', 'valor' => '8', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Trabajo de Grado en En Ejecucion',
+                'codigo' => 'EJECIDEA', 'valor' => '10', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Trabajo de Grado en Expirado',
+                'codigo' => 'EXPIDEA', 'valor' => '11', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Prorroga',
+                'codigo' => 'PRORROGA', 'valor' => '99', 'estado' => true,
                 'idPadre' => null
             ),
         );
