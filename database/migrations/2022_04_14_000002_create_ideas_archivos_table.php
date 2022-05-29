@@ -20,10 +20,9 @@ class CreateIdeasArchivosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_idea');
             $table->unsignedBigInteger('id_codigo_archivo');
-            $table->unsignedBigInteger('id_archivo');
+            $table->unsignedBigInteger('id_archivo')->default(null);
             $table->foreign('id_idea')->references('id')->on('ideas')->onDelete('cascade');
             $table->foreign('id_codigo_archivo')->references('id')->on('listas')->onDelete('cascade');
-            $table->foreign('id_archivo')->references('id')->on('files')->onDelete('cascade');
             $table->timestamps();
         });
 

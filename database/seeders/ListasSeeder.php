@@ -167,7 +167,7 @@ class ListasSeeder extends Seeder
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '9', 'nombre' => 'Resultado Trabajo de Grado en Cancelado',
+                'id_lista_grupo' => '9', 'nombre' => 'Resultado Trabajo de Grado en NO Aprobado',
                 'codigo' => 'CANEIDEA', 'valor' => '8', 'estado' => true,
                 'idPadre' => null
             ),

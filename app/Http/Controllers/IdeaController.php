@@ -301,19 +301,23 @@ class IdeaController extends Controller
 
     public function getEstudiantes()
     {
-        $listas = User::query()
-            ->select(
-                DB::raw(
-                    'users.id,users.name,users.last_name,count(ideas_usuarios.id_usuario) as cant'
-                )
-            )
-            ->join('roles', 'roles.id', '=', 'users.rol_id')
-            ->leftJoin('ideas_usuarios', 'users.id', '=', 'ideas_usuarios.id_usuario')
-            ->where('roles.code', 'ESTUDIANTE')
-            ->groupBy('users.id')
-            //->havingRaw('cant = 0')
 
-            ->get();
+        $listas = DB::select(DB::raw("
+                SELECT users.id, users.email,
+                users.name,users.last_name,count(ideas_usuarios.id_usuario)-IFNULL(cantidadEstadoResultado,0) as cant
+                FROM users
+                INNER JOIN roles ON roles.id = users.rol_id
+                LEFT JOIN ideas_usuarios ON users.id = ideas_usuarios.id_usuario
+                LEFT  JOIN (
+                SELECT  ideas_estados.id_idea, COUNT(*) cantidadEstadoResultado
+                FROM ideas_estados
+                where ideas_estados.id_codigo_estado IN (27,28,30)
+                group by ideas_estados.id_idea
+                )xx
+                ON  ideas_usuarios.id_idea = xx.id_idea
+                where roles.code = 'ESTUDIANTE'
+                GROUP BY users.id,xx.cantidadEstadoResultado
+            "), array());
 
         return response()->json([
             "data" => $listas,
@@ -402,8 +406,19 @@ class IdeaController extends Controller
                     IdeasArchivos::where('id_codigo_archivo', $archivo->id_codigo_archivo)
                     ->where("id_idea", $id_idea)
                     ->first();
-                $IdeasArchivos->id_file_confirmation = $archivo->id_file_propuesta;
-                $IdeasArchivos->save();
+
+                $ideasArchivos = new IdeasArchivos;
+                $ideasArchivos->id_idea = $id_idea;
+                $ideasArchivos->id_codigo_archivo = $archivo->id_codigo_archivo;
+                $ideasArchivos->id_file_confirmation = $archivo->id_file_propuesta;
+                $ideasArchivos->id_archivo = null;
+
+                if ($IdeasArchivos == null) {
+                    $ideasArchivos->save();
+                } else {
+                    $IdeasArchivos->id_file_confirmation = $archivo->id_file_propuesta;
+                    $IdeasArchivos->save();
+                }
             }
         }
 
@@ -435,15 +450,19 @@ class IdeaController extends Controller
             $IdeasArchivos = IdeasArchivos::where('id_codigo_archivo', $lista->id)->where("id_idea", $idIdea)
                 ->first();
 
-            if ($IdeasArchivos != null) {
+            if ($IdeasArchivos !== null) {
 
-                $id_file = $IdeasArchivos->id_archivo;
-                $file = File::find($id_file);
-                $file->url = "http://apiproyectouts.local/api/files/" . $id_file;
-                $IdeasArchivos->file = $file;
+                if ($IdeasArchivos->id_archivo !== null ) {
+                    $id_file = $IdeasArchivos->id_archivo;
+                    $file = File::find($id_file);
+                    $file->url = "http://apiproyectouts.local/api/files/" . $id_file;
+                    $IdeasArchivos->file = $file;
+                } else {
+                    $IdeasArchivos->file = null;
+                }
 
                 $id_file_confirmation = $IdeasArchivos->id_file_confirmation;
-                if ($id_file_confirmation) {
+                if ($id_file_confirmation !== null) {
                     $fileConfirmation = File::find($id_file_confirmation);
                     $file->url = "http://apiproyectouts.local/api/files/" . $id_file_confirmation;
                     $IdeasArchivos->fileConfirmation = $fileConfirmation;
@@ -481,7 +500,18 @@ class IdeaController extends Controller
     {
         $id_usuario = $request->get('id_usuario');
 
-        $IdeasUsuarios = IdeasUsuarios::where("id_usuario", $id_usuario)->first();
+        $IdeasUsuarios = IdeasUsuarios::where("id_usuario", $id_usuario)
+            ->get();
+
+        for ($i=0; $i < count($IdeasUsuarios); $i++) {
+            $IdeasEstado = IdeaEstado::
+                                where("id_idea", $IdeasUsuarios[$i]->id_idea)
+                                ->whereIn("id_codigo_estado",[ 27,28,30])
+                                ->get();
+            $count = $IdeasEstado->count();
+            $IdeasUsuarios[$i]->cant =  $count ;
+            $IdeasUsuarios[$i]->codigoLista =  (count($IdeasEstado)>0)?$IdeasEstado[0]->id_codigo_estado:null ;
+        }
 
         return response()->json([
             "data" => $IdeasUsuarios,
@@ -707,7 +737,7 @@ class IdeaController extends Controller
         $SQL = IdeaEstado::where('id_idea', $id_idea);
 
 
-        $response =  $SQL->whereIn('id_codigo_estado', [26, 27, 28])
+        $response =  $SQL->whereIn('id_codigo_estado', [26, 27, 28,30])
             ->latest()->first();
 
         if ($response) {
@@ -801,7 +831,6 @@ class IdeaController extends Controller
                     "type" => "success"
                 ]);
             }
-
         }
 
         return response()->json([
