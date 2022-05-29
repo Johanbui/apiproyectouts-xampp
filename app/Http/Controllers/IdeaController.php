@@ -452,7 +452,7 @@ class IdeaController extends Controller
 
             if ($IdeasArchivos !== null) {
 
-                if ($IdeasArchivos->id_archivo !== null ) {
+                if ($IdeasArchivos->id_archivo !== null) {
                     $id_file = $IdeasArchivos->id_archivo;
                     $file = File::find($id_file);
                     $file->url = "http://apiproyectouts.local/api/files/" . $id_file;
@@ -503,14 +503,13 @@ class IdeaController extends Controller
         $IdeasUsuarios = IdeasUsuarios::where("id_usuario", $id_usuario)
             ->get();
 
-        for ($i=0; $i < count($IdeasUsuarios); $i++) {
-            $IdeasEstado = IdeaEstado::
-                                where("id_idea", $IdeasUsuarios[$i]->id_idea)
-                                ->whereIn("id_codigo_estado",[ 27,28,30])
-                                ->get();
+        for ($i = 0; $i < count($IdeasUsuarios); $i++) {
+            $IdeasEstado = IdeaEstado::where("id_idea", $IdeasUsuarios[$i]->id_idea)
+                ->whereIn("id_codigo_estado", [27, 28, 30])
+                ->get();
             $count = $IdeasEstado->count();
-            $IdeasUsuarios[$i]->cant =  $count ;
-            $IdeasUsuarios[$i]->codigoLista =  (count($IdeasEstado)>0)?$IdeasEstado[0]->id_codigo_estado:null ;
+            $IdeasUsuarios[$i]->cant =  $count;
+            $IdeasUsuarios[$i]->codigoLista =  (count($IdeasEstado) > 0) ? $IdeasEstado[0]->id_codigo_estado : null;
         }
 
         return response()->json([
@@ -580,7 +579,6 @@ class IdeaController extends Controller
 
     public function getIdeaEstado(Request $request)
     {
-
 
         $codigo_estado = $request->get('codigo_estado');
 
@@ -737,7 +735,7 @@ class IdeaController extends Controller
         $SQL = IdeaEstado::where('id_idea', $id_idea);
 
 
-        $response =  $SQL->whereIn('id_codigo_estado', [26, 27, 28,30])
+        $response =  $SQL->whereIn('id_codigo_estado', [26, 27, 28, 30])
             ->latest()->first();
 
         if ($response) {
