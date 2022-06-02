@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -87,6 +88,7 @@ Route::group([
     'prefix' => 'idea'
 ], function ($router) {
     Route::get('getAll', [\App\Http\Controllers\IdeaController::class, 'getAll'])->name('getAll');
+    Route::get('getAllInformes', [\App\Http\Controllers\IdeaController::class, 'getAllInformes'])->name('getAllInformes');
     Route::get('getOne', [\App\Http\Controllers\IdeaController::class, 'getOne'])->name('getOne');
     Route::put('update', [\App\Http\Controllers\IdeaController::class, 'update'])->name('update');
     Route::post('create', [\App\Http\Controllers\IdeaController::class, 'create'])->name('create');
@@ -122,6 +124,7 @@ Route::group([
     'prefix' => 'listas'
 ], function ($router) {
     Route::get('getAll', [\App\Http\Controllers\ListaController::class, 'getAll'])->name('getAll');
+    Route::get('getEstados', [\App\Http\Controllers\ListaController::class, 'getEstados'])->name('listas.getEstados');
     Route::get('getOne', [\App\Http\Controllers\ListaController::class, 'getOne'])->name('getOne');
 });
 
@@ -129,6 +132,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'ideaEstado'
 ], function ($router) {
+    Route::get('getAllIdeasEstados', [\App\Http\Controllers\IdeaController::class, 'getAll'])->name('getAll');
     Route::post('createIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'createIdeaEstado'])->name('createIdeaEstado');
     Route::get('getIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'getIdeaEstado'])->name('getIdeaEstado');
     Route::get('getResultadoProyecto', [\App\Http\Controllers\IdeaController::class, 'getResultadoProyecto'])->name('getResultadoProyecto');
@@ -142,4 +146,11 @@ Route::group([
 ], function ($router) {
     Route::get('getAll', [\App\Http\Controllers\NotificationController::class, 'getAll'])->name('getAll');
     Route::get('markAsReaded', [\App\Http\Controllers\NotificationController::class, 'markAsReaded'])->name('markAsReaded');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'users'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\UserController::class, 'getAll'])->name('getAll');
 });

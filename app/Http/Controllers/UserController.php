@@ -29,7 +29,9 @@ class UserController extends Controller
         $search = $request->has('search') ? $request->get('search') : '';
 
 
-        $users = User::where('name','LIKE','%'.$search.'%')
+        $users = User::query()
+                ->select('id', 'name', 'last_name')
+                ->where('name','LIKE','%'.$search.'%')
                 ->orWhere('last_name','LIKE','%'.$search.'%')
                 ->limit($limit)
                 ->offset(($page - 1) * $limit)
@@ -41,6 +43,7 @@ class UserController extends Controller
 
         return response()->json([
             "data" => $users,
+            "type" => "success",
             "count" => $countUser,
             "code" => 20000
         ]);

@@ -13,6 +13,7 @@ class ListaController extends Controller
     {
     }
 
+
     public function getAll(Request $request)
     {
         $page = $request->has('page') ? $request->get('page') : 1;
@@ -36,10 +37,35 @@ class ListaController extends Controller
 
         return response()->json([
             "data" => $listaGrupos,
+            "type" => "success",
             "count" => $countActas,
             "code" => 20000
         ]);
 
+    }
+
+    public function getEstados() {
+        $idEstadoIdea = ListaGrupo::query()
+            ->where('codigo', '=', 'ESTIDEA')
+            ->value('id');
+
+        if ($idEstadoIdea) {
+            $estadosIdea = Lista::query()
+                ->where('id_lista_grupo', $idEstadoIdea)
+                ->get();
+
+            return response()->json([
+                "data" => $estadosIdea,
+                "type" => "success",
+                "code" => 20000
+            ]);
+        }
+
+        return response()->json([
+            "data" => [],
+            "type" => "failed",
+            "code" => 50000
+        ]);
     }
 
     public function getOne(Request $request)

@@ -18,9 +18,75 @@ use App\Models\Notificaciones;
 use Illuminate\Support\Facades\DB;
 use App\Models\NotificacionesUsuarios;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class IdeaController extends Controller
 {
+
+    public function getAllInformes(Request $request)
+    {
+        $id_coordinacion = auth()->user()->id_coordinacion;
+        $estado_idea = $request->get('estado_idea', '');
+        $estudiantes = $request->get('estudiantes', '');
+        $fecha_inicio = !empty($request->get('fecha_inicio')) ? Carbon::parse($request->get('fecha_inicio'))->format('Y-m-d') : '';
+        $fecha_fin = !empty($request->get('fecha_fin')) ? Carbon::parse($request->get('fecha_fin'))->format('Y-m-d') : '';
+        $modalidad =$request->get('modalidad', '');
+        $linea_investigacion =$request->get('linea_investigacion', '');
+
+        $ideas = Idea::query()
+            ->select(
+                'ideas.id',
+                'titulo',
+                'max_estudiantes',
+                'listas.nombre AS nombreModalidad',
+                'listas2.nombre AS nombreLineaInvestigacion',
+                DB::raw('COUNT(ideas_usuarios.id_idea) AS cantidadUsuarios')
+            )
+            ->join('listas', 'ideas.modalidad', '=', 'listas.id')
+            ->join('listas AS listas2', 'ideas.linea_investigacion', '=', 'listas2.id')
+            ->leftJoin('ideas_usuarios', 'ideas.id', '=', 'ideas_usuarios.id_idea')
+            ->leftJoin('ideas_estados', 'ideas_usuarios.id', '=', 'ideas_estados.id_idea')
+            ->groupBy('ideas.id');
+
+            if ($id_coordinacion) {
+                $ideas = $ideas->where('id_coordinacion', $id_coordinacion);
+            }
+
+            if ($estado_idea) {
+                $ideas = $ideas->whereIn('ideas_estados.id_codigo_estado', $estado_idea);
+            }
+
+            if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+                $ideas = $ideas->whereBetween('ideas.created_at', [$fecha_inicio, $fecha_fin]);
+            } elseif (!empty($fecha_inicio)) {
+                $ideas = $ideas->whereDate('ideas.created_at', '>=', $fecha_inicio);
+            } elseif (!empty($fecha_fin)) {
+                $ideas = $ideas->whereDate('ideas.created_at', '<=', $fecha_fin);
+            }
+
+            if ($estudiantes) {
+                $ideas = $ideas->whereIn('ideas_usuarios.id_usuario', $estudiantes);
+            }
+
+            if ($modalidad) {
+                $ideas = $ideas->where('modalidad', $modalidad);
+            }
+
+            if ($linea_investigacion) {
+                $ideas = $ideas->where('linea_investigacion', $linea_investigacion);
+            }
+
+        $ideas = $ideas->get();
+
+        $countActas = Idea::count();
+
+        return response()->json([
+            "data" => $ideas,
+            "type" => "success",
+            "count" => $countActas,
+            "code" => 20000
+        ]);
+    }
 
     public function getAll(Request $request)
     {
@@ -50,6 +116,7 @@ class IdeaController extends Controller
 
         return response()->json([
             "data" => $actas,
+            "type" => "success",
             "count" => $countActas,
             "code" => 20000
         ]);
