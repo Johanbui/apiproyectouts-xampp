@@ -30,8 +30,9 @@ class IdeaController extends Controller
         $estudiantes = $request->get('estudiantes', '');
         $fecha_inicio = !empty($request->get('fecha_inicio')) ? Carbon::parse($request->get('fecha_inicio'))->format('Y-m-d') : '';
         $fecha_fin = !empty($request->get('fecha_fin')) ? Carbon::parse($request->get('fecha_fin'))->format('Y-m-d') : '';
-        $modalidad =$request->get('modalidad', '');
-        $linea_investigacion =$request->get('linea_investigacion', '');
+        $modalidad = $request->get('modalidad', '');
+        $linea_investigacion = $request->get('linea_investigacion', '');
+        $search = $request->get('search', '');
 
         $ideas = Idea::query()
             ->select(
@@ -48,33 +49,41 @@ class IdeaController extends Controller
             ->leftJoin('ideas_estados', 'ideas_usuarios.id', '=', 'ideas_estados.id_idea')
             ->groupBy('ideas.id');
 
-            if ($id_coordinacion) {
-                $ideas = $ideas->where('id_coordinacion', $id_coordinacion);
-            }
+        if ($id_coordinacion) {
+            $ideas = $ideas->where('id_coordinacion', $id_coordinacion);
+        }
 
-            if ($estado_idea) {
-                $ideas = $ideas->whereIn('ideas_estados.id_codigo_estado', $estado_idea);
-            }
+        if ($estado_idea) {
+            $ideas = $ideas->whereIn('ideas_estados.id_codigo_estado', $estado_idea);
+        }
 
-            if (!empty($fecha_inicio) && !empty($fecha_fin)) {
-                $ideas = $ideas->whereBetween('ideas.created_at', [$fecha_inicio, $fecha_fin]);
-            } elseif (!empty($fecha_inicio)) {
-                $ideas = $ideas->whereDate('ideas.created_at', '>=', $fecha_inicio);
-            } elseif (!empty($fecha_fin)) {
-                $ideas = $ideas->whereDate('ideas.created_at', '<=', $fecha_fin);
-            }
+        if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+            $ideas = $ideas->whereBetween('ideas.created_at', [$fecha_inicio, $fecha_fin]);
+        } elseif (!empty($fecha_inicio)) {
+            $ideas = $ideas->whereDate('ideas.created_at', '>=', $fecha_inicio);
+        } elseif (!empty($fecha_fin)) {
+            $ideas = $ideas->whereDate('ideas.created_at', '<=', $fecha_fin);
+        }
 
-            if ($estudiantes) {
-                $ideas = $ideas->whereIn('ideas_usuarios.id_usuario', $estudiantes);
-            }
+        if ($estudiantes) {
+            $ideas = $ideas->whereIn('ideas_usuarios.id_usuario', $estudiantes);
+        }
 
-            if ($modalidad) {
-                $ideas = $ideas->where('modalidad', $modalidad);
-            }
+        if ($modalidad) {
+            $ideas = $ideas->where('modalidad', $modalidad);
+        }
 
-            if ($linea_investigacion) {
-                $ideas = $ideas->where('linea_investigacion', $linea_investigacion);
-            }
+        if ($linea_investigacion) {
+            $ideas = $ideas->where('linea_investigacion', $linea_investigacion);
+        }
+
+        if ($search) {
+            $ideas = $ideas->where(function ($query) use ($search) {
+                $query->where('listas.nombre', 'LIKE', '%' . $search . '%');
+                $query->orWhere('listas2.nombre', 'LIKE', '%' . $search . '%');
+                $query->orWhere('titulo', 'LIKE', '%' . $search . '%');
+            });
+        }
 
         $ideas = $ideas->get();
 
