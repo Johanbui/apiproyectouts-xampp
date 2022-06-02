@@ -71,9 +71,17 @@ class ListaController extends Controller
     public function getOne(Request $request)
     {
         $codigoListaGrupo = $request->has('codigo') ? $request->get('codigo') : 0;
+        $idPadreLista = $request->has('idPadre') ? $request->get('idPadre') : 0;
+
         $listaGrupo = ListaGrupo::where('codigo',$codigoListaGrupo)->first();
         $idListaGrupo = $listaGrupo->id;
-        $listas = Lista::where('id_lista_grupo',$idListaGrupo)->get();
+         $SQL = Lista::where('id_lista_grupo',$idListaGrupo);
+
+        if($idPadreLista !=="" && $idPadreLista !==0 && !empty($idPadreLista)){
+            $SQL->where('idPadre',$idPadreLista);
+        }
+
+        $listas = $SQL->get();
         return response()->json([
             "data" => $listas,
             "code" => 20000

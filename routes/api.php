@@ -137,6 +137,7 @@ Route::group([
     Route::get('getIdeaEstado', [\App\Http\Controllers\IdeaController::class, 'getIdeaEstado'])->name('getIdeaEstado');
     Route::get('getResultadoProyecto', [\App\Http\Controllers\IdeaController::class, 'getResultadoProyecto'])->name('getResultadoProyecto');
     Route::get('getIdeaEstadoExist', [\App\Http\Controllers\IdeaController::class, 'getIdeaEstadoExist'])->name('getIdeaEstadoExist');
+    Route::get('getIdeaEstadoActa', [\App\Http\Controllers\IdeaController::class, 'getIdeaEstadoActa'])->name('getIdeaEstadoActa');
 
 });
 

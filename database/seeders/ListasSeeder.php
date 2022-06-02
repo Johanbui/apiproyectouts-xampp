@@ -46,12 +46,12 @@ class ListasSeeder extends Seeder
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '2', 'nombre' => 'Desarrollo de Software',
+                'id_lista_grupo' => '2', 'nombre' => 'Desarrollo de Tecnologico',
                 'codigo' => 'DESSOF', 'valor' => '1', 'estado' => true,
                 'idPadre' => null
             ),
             array(
-                'id_lista_grupo' => '2', 'nombre' => 'Trabajo de Investigación',
+                'id_lista_grupo' => '2', 'nombre' => 'Proyecto de Investigación',
                 'codigo' => 'PROINV', 'valor' => '2', 'estado' => true,
                 'idPadre' => null
             ),
@@ -181,10 +181,276 @@ class ListasSeeder extends Seeder
                 'codigo' => 'EXPIDEA', 'valor' => '11', 'estado' => true,
                 'idPadre' => null
             ),
+
+
             array(
                 'id_lista_grupo' => '7', 'nombre' => 'Prorroga',
                 'codigo' => 'PRORROGA', 'valor' => '99', 'estado' => true,
+                'idPadre' => 4
+            ),
+            array(
+                'id_lista_grupo' => '2', 'nombre' => 'Monografia',
+                'codigo' => 'MODMONO', 'valor' => '3', 'estado' => true,
                 'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '2', 'nombre' => 'Emprendimiento',
+                'codigo' => 'MODEMPR', 'valor' => '4', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '2', 'nombre' => 'Seminario',
+                'codigo' => 'MODSEMI', 'valor' => '5', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '2', 'nombre' => 'Practica',
+                'codigo' => 'MODPRAC', 'valor' => '6', 'estado' => true,
+                'idPadre' => null
+            ),
+            array(
+                'id_lista_grupo' => '3', 'nombre' => 'Monografia',
+                'codigo' => 'LINMONO', 'valor' => '3', 'estado' => true,
+                'idPadre' => 32
+            ),
+            array(
+                'id_lista_grupo' => '3', 'nombre' => 'Emprendimiento',
+                'codigo' => 'LINEMPR', 'valor' => '4', 'estado' => true,
+                'idPadre' => 33
+            ),
+            array(
+                'id_lista_grupo' => '3', 'nombre' => 'Seminario',
+                'codigo' => 'LINSEM', 'valor' => '5', 'estado' => true,
+                'idPadre' => 34
+            ),
+            array(
+                'id_lista_grupo' => '3', 'nombre' => 'Practica',
+                'codigo' => 'LINPRAC', 'valor' => '6', 'estado' => true,
+                'idPadre' => 35
+            ),
+            array(
+                'id_lista_grupo' => '6', 'nombre' => 'F-DC-124',
+                'codigo' => '5FDC124', 'valor' => '2', 'estado' => true,
+                'idPadre' => 5
+            ),
+            array(
+                'id_lista_grupo' => '6', 'nombre' => 'F-DC-124',
+                'codigo' => '32FDC124', 'valor' => '3', 'estado' => true,
+                'idPadre' => 32
+            ),
+            array(
+                'id_lista_grupo' => '6', 'nombre' => 'F-DC-124',
+                'codigo' => '33FDC124', 'valor' => '4', 'estado' => true,
+                'idPadre' => 33
+            ),
+            array(
+                'id_lista_grupo' => '6', 'nombre' => 'F-DC-124',
+                'codigo' => '34FDC124', 'valor' => '5', 'estado' => true,
+                'idPadre' => 34
+            ),
+            array(
+                'id_lista_grupo' => '6', 'nombre' => 'F-DC-126',
+                'codigo' => '35FDC126', 'valor' => '6', 'estado' => true,
+                'idPadre' => 35
+            ),
+            array(
+                'id_lista_grupo' => '6', 'nombre' => 'F-DC-127',
+                'codigo' => '35FDC1276', 'valor' => '7', 'estado' => true,
+                'idPadre' => 35
+            ),
+
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-125 - Informe Final',
+                'codigo' => '5FDC125', 'valor' => '7', 'estado' => true,
+                'idPadre' => 5
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-129 - Rejilla de Evaluación',
+                'codigo' => '5FDC129', 'valor' => '8', 'estado' => true,
+                'idPadre' => 5
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-01 - Licencia de Autorización Interna',
+                'codigo' => '5FGC01', 'valor' => '9', 'estado' => true,
+                'idPadre' => 5
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-02 - Ficha de Metadatos',
+                'codigo' => '5FGC02', 'valor' => '10', 'estado' => true,
+                'idPadre' => 5
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Exposición Trabajo de Grado',
+                'codigo' => '5EXP01', 'valor' => '11', 'estado' => true,
+                'idPadre' => 5
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Otros Archivos de Sustentación',
+                'codigo' => '5OTROS', 'valor' => '12', 'estado' => true,
+                'idPadre' => 5
+            ),
+
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-125 - Informe Final',
+                'codigo' => '32FDC125', 'valor' => '13', 'estado' => true,
+                'idPadre' => 32
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-129 - Rejilla de Evaluación',
+                'codigo' => '32FDC129', 'valor' => '14', 'estado' => true,
+                'idPadre' => 32
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-01 - Licencia de Autorización Interna',
+                'codigo' => '32FGC01', 'valor' => '15', 'estado' => true,
+                'idPadre' => 32
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-02 - Ficha de Metadatos',
+                'codigo' => '32FGC02', 'valor' => '16', 'estado' => true,
+                'idPadre' => 32
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Exposición Trabajo de Grado',
+                'codigo' => '32EXP01', 'valor' => '17', 'estado' => true,
+                'idPadre' => 32
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Otros Archivos de Sustentación',
+                'codigo' => '32OTROS', 'valor' => '18', 'estado' => true,
+                'idPadre' => 32
+            ),
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-125 - Informe Final',
+                'codigo' => '33FDC125', 'valor' => '19', 'estado' => true,
+                'idPadre' => 33
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-129 - Rejilla de Evaluación',
+                'codigo' => '33FDC129', 'valor' => '20', 'estado' => true,
+                'idPadre' => 33
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-01 - Licencia de Autorización Interna',
+                'codigo' => '33FGC01', 'valor' => '21', 'estado' => true,
+                'idPadre' => 33
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-02 - Ficha de Metadatos',
+                'codigo' => '33FGC02', 'valor' => '22', 'estado' => true,
+                'idPadre' => 33
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Exposición Trabajo de Grado',
+                'codigo' => '33EXP01', 'valor' => '23', 'estado' => true,
+                'idPadre' => 33
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Otros Archivos de Sustentación',
+                'codigo' => '33OTROS', 'valor' => '24', 'estado' => true,
+                'idPadre' => 33
+            ),
+
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-125 - Informe Final',
+                'codigo' => '34FDC125', 'valor' => '25', 'estado' => true,
+                'idPadre' => 34
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-129 - Rejilla de Evaluación',
+                'codigo' => '34FDC129', 'valor' => '26', 'estado' => true,
+                'idPadre' => 34
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-01 - Licencia de Autorización Interna',
+                'codigo' => '34FGC01', 'valor' => '27', 'estado' => true,
+                'idPadre' => 34
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-GC-02 - Ficha de Metadatos',
+                'codigo' => '34FGC02', 'valor' => '28', 'estado' => true,
+                'idPadre' => 34
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Exposición Trabajo de Grado',
+                'codigo' => '34EXP01', 'valor' => '29', 'estado' => true,
+                'idPadre' => 34
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Otros Archivos de Sustentación',
+                'codigo' => '34OTROS', 'valor' => '30', 'estado' => true,
+                'idPadre' => 34
+            ),
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-128 - Informe Final',
+                'codigo' => '35FGC02', 'valor' => '31', 'estado' => true,
+                'idPadre' => 35
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'F-DC-129 - Rejilla de Evaluación',
+                'codigo' => '35FDC129', 'valor' => '32', 'estado' => true,
+                'idPadre' => 35
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Exposición Trabajo de Grado',
+                'codigo' => '35EXP01', 'valor' => '33', 'estado' => true,
+                'idPadre' => 35
+            ),
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Otros Archivos de Sustentación',
+                'codigo' => '35OTROS', 'valor' => '34', 'estado' => true,
+                'idPadre' => 35
+            ),
+
+            array(
+                'id_lista_grupo' => '3', 'nombre' => 'Proyecto de Investigacion',
+                'codigo' => 'LINPROIN', 'valor' => '7', 'estado' => true,
+                'idPadre' => 5
+            ),
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Prorroga',
+                'codigo' => 'PRORROGA', 'valor' => '99', 'estado' => true,
+                'idPadre' => 5
+            ),
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Prorroga',
+                'codigo' => 'PRORROGA', 'valor' => '99', 'estado' => true,
+                'idPadre' => 32
+            ),
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Prorroga',
+                'codigo' => 'PRORROGA', 'valor' => '99', 'estado' => true,
+                'idPadre' =>33
+            ),
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Prorroga',
+                'codigo' => 'PRORROGA', 'valor' => '99', 'estado' => true,
+                'idPadre' =>34
+            ),
+
+
+            array(
+                'id_lista_grupo' => '7', 'nombre' => 'Prorroga',
+                'codigo' => 'PRORROGA', 'valor' => '99', 'estado' => true,
+                'idPadre' =>35
             ),
         );
         DB::table('listas')->insert($arr);

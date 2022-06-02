@@ -105,10 +105,12 @@ class IdeaController extends Controller
         $actas = Idea::query()
             ->select(
                 DB::raw(
-                    'ideas.id,
+                'ideas.id,
                 titulo,
                 max_estudiantes,
                 listas.nombre AS nombreModalidad,
+                ideas.modalidad,
+                ideas.linea_investigacion,
                 listas2.nombre AS nombreLineaInvestigacion,
                 COUNT(ideas_usuarios.id_idea ) AS cantidadUsuarios'
                 )
@@ -518,8 +520,12 @@ class IdeaController extends Controller
         $listaGrupo = ListaGrupo::where('codigo', $codigoListaGrupo)->first();
 
         $idListaGrupo = $listaGrupo->id;
-        $listas = Lista::where('id_lista_grupo', $idListaGrupo)->get();
 
+        $idea = Idea::find( $idIdea);
+        $listas =   Lista::where('id_lista_grupo', $idListaGrupo)
+                    ->where('idPadre',$idea->modalidad)
+
+                    ->get();
 
         for ($i = 0; $i < count($listas); $i++) {
             $lista =  $listas[$i];
@@ -907,6 +913,41 @@ class IdeaController extends Controller
             }
         }
 
+        return response()->json([
+            "data" => null,
+            "exist" => false,
+            "code" => 20000,
+            "message" => "No existe Estado",
+            "type" => "success"
+        ]);
+    }
+
+    public function getIdeaEstadoActa(Request $request)
+    {
+
+        $codigo_estado = $request->get('codigo_estado');
+        $idCodigoEstado = Lista::query()
+            ->where('codigo', $codigo_estado)
+            ->first();
+
+        $id_idea = $request->get('id_idea');
+
+
+        $ideaEstado = IdeaEstado::where('id_idea', $id_idea)
+            ->where('id_codigo_estado', $idCodigoEstado->id)
+            ->first();
+
+        $response = Acta::find($ideaEstado->id_acta);
+
+        if ($response) {
+            return response()->json([
+                "data" => $response,
+                "exist" => true,
+                "code" => 20000,
+                "message" => "Created Succefully!",
+                "type" => "success"
+            ]);
+        }
         return response()->json([
             "data" => null,
             "exist" => false,
