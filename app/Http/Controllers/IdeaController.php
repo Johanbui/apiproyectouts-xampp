@@ -34,6 +34,24 @@ class IdeaController extends Controller
         $linea_investigacion = $request->get('linea_investigacion', '');
         $search = $request->get('search', '');
 
+        $subWhere = "
+            ideas_estados.id = (
+                SELECT ie.id
+                FROM ideas_estados as ie
+                WHERE ie.id_idea = ideas.id
+                ORDER BY ie.created_at
+                LIMIT 1
+            ) OR ideas_estados.id IS NULL
+        ";
+
+        $subConsulta = DB::table('ideas_estados as ie')
+                ->select('listas3.nombre')
+                ->leftJoin('listas AS listas3', 'ie.id_codigo_estado', '=', 'listas3.id')
+                ->whereRaw('ie.id_idea = ideas.id')
+                ->orderByDesc('ie.created_at')
+                ->limit(1)
+                ->toSql();
+
         $ideas = Idea::query()
             ->select(
                 'ideas.id',
@@ -41,16 +59,21 @@ class IdeaController extends Controller
                 'max_estudiantes',
                 'listas.nombre AS nombreModalidad',
                 'listas2.nombre AS nombreLineaInvestigacion',
-                DB::raw('COUNT(ideas_usuarios.id_idea) AS cantidadUsuarios')
+                DB::raw('COUNT(ideas_usuarios.id_idea) AS cantidadUsuarios'),
+                DB::raw("GROUP_CONCAT(users.name SEPARATOR ', ') AS usuarios"),
+                DB::raw("($subConsulta) AS ultimoEstado")
             )
             ->join('listas', 'ideas.modalidad', '=', 'listas.id')
             ->join('listas AS listas2', 'ideas.linea_investigacion', '=', 'listas2.id')
             ->leftJoin('ideas_usuarios', 'ideas.id', '=', 'ideas_usuarios.id_idea')
-            ->leftJoin('ideas_estados', 'ideas_usuarios.id', '=', 'ideas_estados.id_idea')
-            ->groupBy('ideas.id');
+            ->leftJoin('ideas_estados', 'ideas.id', '=', 'ideas_estados.id_idea')
+            ->leftJoin('users', 'ideas_usuarios.id_usuario', '=', 'users.id')
+            ->whereRaw($subWhere)
+            ->groupBy('ideas.id')
+            ;
 
         if ($id_coordinacion) {
-            $ideas = $ideas->where('id_coordinacion', $id_coordinacion);
+            $ideas = $ideas->where('ideas.id_coordinacion', $id_coordinacion);
         }
 
         if ($estado_idea) {
