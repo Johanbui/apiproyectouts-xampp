@@ -30,7 +30,7 @@ class UserController extends Controller
 
 
         $users = User::query()
-                ->select('id', 'name', 'last_name')
+                ->select('id', 'name', 'last_name','email','avatar')
                 ->where('name','LIKE','%'.$search.'%')
                 ->orWhere('last_name','LIKE','%'.$search.'%')
                 ->limit($limit)
@@ -157,7 +157,7 @@ class UserController extends Controller
         $userId = $request->has('id') ? $request->get('id') : 0;
         $password = $request->get('password');
         $repassword = $request->get('repassword');
-        $newpassword = $request->get('newpassword');
+        // $newpassword = $request->get('newpassword');
 
         $user = User::find($userId);
 
@@ -174,7 +174,7 @@ class UserController extends Controller
             "password" =>$password
         ];
 
-
+        /*
         if(! auth()->attempt($credentials)){
             return response()->json([
                 "message"=> "Not Autenticated",
@@ -184,8 +184,10 @@ class UserController extends Controller
             ]);
         }
 
+        */
+
         $user = User::find($userId);
-        $user->password = Hash::make($newpassword);
+        $user->password = Hash::make($password);
         $user->save();
 
         return response()->json([
