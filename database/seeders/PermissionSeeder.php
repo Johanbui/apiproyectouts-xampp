@@ -52,6 +52,15 @@ class PermissionSeeder extends Seeder
             array('code' => 'IDEA-TOGGLE', 'name'=> 'Inhabilitar/Habilitar Idea'),
             array('code' => 'IDEA-ONE', 'name'=> 'Ver Idea'),
 
+            // CRUD BLOG
+
+            array('code' => 'BLOG-INDEX', 'name'=> 'Listado de Blogs'),
+            array('code' => 'BLOG-CREATE', 'name'=> 'Crear Blog'),
+            array('code' => 'BLOG-EDIT', 'name'=> 'Editar Blog'),
+            array('code' => 'BLOG-TOGGLE', 'name'=> 'Inhabilitar/Habilitar Blog'),
+            array('code' => 'BLOG-ONE', 'name'=> 'Ver Blog'),
+
+
         );
 
         DB::table('permissions')->insert($arr);

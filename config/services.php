@@ -29,5 +29,13 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'microsoft_graph' => [
+        'client_id' => env('ef17e26d-7a93-4913-bc9d-9445d42a9d03'),
+        'client_secret' => env('Wld8Q~JlTX3pI.jGGoPJzJxt1suIJYFBAZTgPa7d'),
+        'redirect' => env('http://localhost:8000/connect'),
+        'permissions' => [
+            'User.Read',
+        ],
+    ],
 
 ];

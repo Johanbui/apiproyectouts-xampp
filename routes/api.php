@@ -27,11 +27,15 @@ Route::group([
     'prefix' => 'auth'
 
 ], function ($router) {
-    Route::post('login', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name('login');
+    Route::get('login', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name('login');
     Route::post('logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name('logout');
     Route::post('refresh', [\App\Http\Controllers\Auth\AuthController::class, 'refresh'])->name('refresh');
     Route::post('me', [\App\Http\Controllers\Auth\AuthController::class, 'me'])->name('me');
+
 });
+
+
+
 
 
 Route::group([
@@ -73,6 +77,8 @@ Route::group([
     Route::put('update', [\App\Http\Controllers\RolPermissionController::class, 'update'])->name('update');
 });
 
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'acta'
@@ -81,6 +87,17 @@ Route::group([
     Route::get('getOne', [\App\Http\Controllers\ActaController::class, 'getOne'])->name('getOne');
     Route::put('update', [\App\Http\Controllers\ActaController::class, 'update'])->name('update');
     Route::post('create', [\App\Http\Controllers\ActaController::class, 'create'])->name('create');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'blog'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\BlogController::class, 'getAll'])->name('getAll');
+    Route::get('getLast3', [\App\Http\Controllers\BlogController::class, 'getLast3'])->name('getLast3');
+    Route::get('getOne', [\App\Http\Controllers\BlogController::class, 'getOne'])->name('getOne');
+    Route::put('update', [\App\Http\Controllers\BlogController::class, 'update'])->name('update');
+    Route::post('create', [\App\Http\Controllers\BlogController::class, 'create'])->name('create');
 });
 
 Route::group([
@@ -155,3 +172,18 @@ Route::group([
 ], function ($router) {
     Route::get('getAll', [\App\Http\Controllers\UserController::class, 'getAll'])->name('getAll');
 });
+//azure
+Route::group(['middleware' => ['web', 'guest'], 'namespace' => 'App\Http\Controllers'], function(){
+    Route::get('login', 'AuthController@login')->name('login');
+    Route::get('connect', 'AuthController@connect')->name('connect');
+    Route::get('azureredirect', 'AuthController@azureredirect')->name('azureredirect');
+});
+
+Route::group(['middleware' => ['web', 'MsGraphAuthenticated'], 'prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function(){
+    Route::get('/', 'PagesController@app')->name('app');
+    Route::post('logout', 'Auth\AuthController@logout')->name('logout');
+
+
+});
+
+//azure

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acta;
+use App\Models\Blog;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -51,8 +52,34 @@ class FileController extends Controller
 
     public function getOne(Request $request,$fileId){
         $file = File::find($fileId);
-        $contents = Storage::download($file->path);
-        return $contents;
+
+    // Asumiendo que $file->path contiene la ruta almacenada en Storage
+    $imageContent = Storage::get($file->path);
+
+    // Obtén la extensión del archivo
+    $extension = pathinfo($file->path, PATHINFO_EXTENSION);
+
+    // Define los tipos MIME para imágenes que deseas admitir
+    $imageMimeTypes = [
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'png' => 'image/png',
+        // Agrega más extensiones de imagen según sea necesario
+    ];
+
+    // Verifica si la extensión corresponde a una imagen
+    if (isset($imageMimeTypes[$extension])) {
+        $mime = $imageMimeTypes[$extension];
+        $contentDisposition = 'inline';
+    } else {
+        // Si no es una imagen, configura la descarga predeterminada
+        $mime = 'application/octet-stream'; // Tipo MIME para archivos desconocidos
+        $contentDisposition = 'attachment; filename="' . $file->name . '"';
+    }
+
+    return response($imageContent)
+        ->header('Content-Type', $mime)
+        ->header('Content-Disposition', $contentDisposition);
     }
 
     public function pushLista(Request $request)

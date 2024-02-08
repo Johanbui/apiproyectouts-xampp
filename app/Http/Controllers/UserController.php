@@ -11,8 +11,18 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
+use mysqli;
+use App\Mail\NotifyMail;
+use App\Models\NotificacionesUsuarios;
+use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+
+
+
 class UserController extends Controller
 {
+
+
     /**
      * Create a new AuthController instance.
      *
@@ -138,8 +148,18 @@ class UserController extends Controller
             ]);
         }
 
+
         $user->save();
 
+        $asunto = "Hola" .$request->get('name'). " se le ha registrado en nuestra plataforma";
+            $comentario = "Su usuario es: ".$request->get('email')." y su contraseña ".$request->get('password')." ";
+            $emailsUsuarios = User::query()
+                    ->select('email')
+                    ->Where('email', '=', $request->get('email'))
+                    ->get();
+                foreach ($emailsUsuarios as $email) {
+                    $this->enviarCorreo($email,  $asunto, $comentario);
+                }
         return response()->json([
             "data" => $user,
             "code" => 20000,
@@ -148,6 +168,19 @@ class UserController extends Controller
         ]);
 
 
+    }
+
+    public function enviarCorreo($email, $asunto, $cuerpo)
+    {
+        $arrayInfo['cuerpo'] = $cuerpo;
+
+        Mail::to($email)->send(new NotifyMail($arrayInfo, $asunto));
+
+        if (Mail::failures()) {
+            return response()->Fail('Sorry! Please try again latter');
+        } else {
+            return null;
+        }
     }
 
 
