@@ -15,8 +15,8 @@ class CreateBlogTable extends Migration
     {
         Schema::create('blog', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo');
-            $table->string('noticia');
+            $table->string('codigo', 1000);
+            $table->text('noticia');
             $table->dateTime('fecha');
             $table->unsignedBigInteger('file_id')->default(1);
             $table->foreign('file_id')->references('id')->on('files');
