@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ListasSeeder::class,
             IdeasSeeder::class,
         ]);
-        \App\Models\User::factory(10)->create();
+        //\App\Models\User::factory(10)->create();
 
     }
 }

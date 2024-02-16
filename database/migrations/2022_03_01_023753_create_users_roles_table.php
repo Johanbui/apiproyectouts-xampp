@@ -29,13 +29,13 @@ class CreateUsersRolesTable extends Migration
         $rol->save();
 
         $user = new User();
-        $user->name = "Andres";
-        $user->last_name = "Nova";
-        $user->email = "jahiranova@uts.edu.co";
+        $user->name = "Unidades Tecnologicas";
+        $user->last_name = "De Santander";
+        $user->email = "superuts@uts.edu.co";
         $user->avatar = "https://avatars.githubusercontent.com/u/15214301?v=4";
         $user->gender = 1;
         $user->enable = 1;
-        $user->password = Hash::make("Uts2022");
+        $user->password = Hash::make("Uts2024");
         $user->save();
 
 
