@@ -128,22 +128,20 @@ class IdeaController extends Controller
 
         $actas = Idea::query()
             ->select(
-                DB::raw(
-                'ideas.id,
-                titulo,
-                max_estudiantes,
-                listas.nombre AS nombreModalidad,
-                ideas.modalidad,
-                ideas.linea_investigacion,
-                listas2.nombre AS nombreLineaInvestigacion,
-                COUNT(ideas_usuarios.id_idea ) AS cantidadUsuarios'
-                )
+                'ideas.id',
+                'titulo',
+                'max_estudiantes',
+                DB::raw('listas.nombre AS nombreModalidad'),
+                'ideas.modalidad',
+                'ideas.linea_investigacion',
+                DB::raw('listas2.nombre AS nombreLineaInvestigacion'),
+                DB::raw('COUNT(ideas_usuarios.id_idea) AS cantidadUsuarios')
             )
             ->join('listas', 'ideas.modalidad', '=', 'listas.id')
             ->join('listas AS listas2', 'ideas.linea_investigacion', '=', 'listas2.id')
             ->leftJoin('ideas_usuarios', 'ideas.id', '=', 'ideas_usuarios.id_idea')
             ->where('id_coordinacion', $id_coordinacion)
-            ->groupBy('ideas.id')
+            ->groupBy('ideas.id', 'titulo', 'max_estudiantes', 'listas.nombre', 'ideas.modalidad', 'ideas.linea_investigacion', 'listas2.nombre')
             ->limit($limit)
             ->get();
 
