@@ -74,7 +74,6 @@ class RolSeeder extends Seeder
             array('rol_id' => '2', 'permission_id'=> '30', 'enable' => true),
 
             //DOCENTE
-            array('rol_id' => '3', 'permission_id'=> '2', 'enable' => true),
             array('rol_id' => '3', 'permission_id'=> '14', 'enable' => true),
             array('rol_id' => '3', 'permission_id'=> '15', 'enable' => true),
             array('rol_id' => '3', 'permission_id'=> '16', 'enable' => true),

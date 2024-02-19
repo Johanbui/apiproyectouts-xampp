@@ -400,32 +400,44 @@ class IdeaController extends Controller
 
 
     public function getEstudiantes()
-    {
+{
+    $listas = DB::select(DB::raw("
+        SELECT
+            users.id,
+            users.email,
+            users.name,
+            users.last_name,
+            COUNT(ideas_usuarios.id_usuario) - IFNULL(cantidadEstadoResultado, 0) as cant
+        FROM
+            users
+        INNER JOIN
+            roles ON roles.id = users.rol_id
+        LEFT JOIN
+            ideas_usuarios ON users.id = ideas_usuarios.id_usuario
+        LEFT JOIN (
+            SELECT
+                ideas_estados.id_idea,
+                COUNT(*) as cantidadEstadoResultado
+            FROM
+                ideas_estados
+            WHERE
+                ideas_estados.id_codigo_estado IN (27, 28, 30)
+            GROUP BY
+                ideas_estados.id_idea
+        ) xx ON ideas_usuarios.id_idea = xx.id_idea
+        WHERE
+            roles.code = 'ESTUDIANTE'
+        GROUP BY
+            users.id, users.email, users.name, users.last_name, xx.cantidadEstadoResultado
+    "), array());
 
-        $listas = DB::select(DB::raw("
-                SELECT users.id, users.email,
-                users.name,users.last_name,count(ideas_usuarios.id_usuario)-IFNULL(cantidadEstadoResultado,0) as cant
-                FROM users
-                INNER JOIN roles ON roles.id = users.rol_id
-                LEFT JOIN ideas_usuarios ON users.id = ideas_usuarios.id_usuario
-                LEFT  JOIN (
-                SELECT  ideas_estados.id_idea, COUNT(*) cantidadEstadoResultado
-                FROM ideas_estados
-                where ideas_estados.id_codigo_estado IN (27,28,30)
-                group by ideas_estados.id_idea
-                )xx
-                ON  ideas_usuarios.id_idea = xx.id_idea
-                where roles.code = 'ESTUDIANTE'
-                GROUP BY users.id,xx.cantidadEstadoResultado
-            "), array());
-
-        return response()->json([
-            "data" => $listas,
-            "code" => 20000,
-            "message" => "Created Succefully!",
-            "type" => "success"
-        ]);
-    }
+    return response()->json([
+        "data" => $listas,
+        "code" => 20000,
+        "message" => "Created Successfully!",
+        "type" => "success"
+    ]);
+}
     public function createEstudiantesIdeas(Request $request)
     {
         $estudiantes =  $request->get('estudiantes');
