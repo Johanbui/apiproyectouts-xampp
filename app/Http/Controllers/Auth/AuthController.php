@@ -53,27 +53,49 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        session()->forget('msgraph_user');
-    cache()->forget('msgraph_access_token');
+    // Verificar si se proporcionó un nombre de usuario
+    if ($request->filled('username')) {
+        // Obtener credenciales del formulario
+        $email = $request->input('username');
+        $password = $request->input('password');
 
-        if ($request->filled('username')) {
-            $credentials = ["email"=>request('username'),"password" =>request('password')];
+        // Buscar al usuario por correo electrónico
+        $user = User::where('email', $email)->first();
 
-        if (! $token = auth()->attempt($credentials)) {
-            $alerta="Su cuenta no se encuentra registrada en nuestro sistema, debe mandar un correo a la coordinación para solicitar su registro";
-            return redirect("http://localhost:9528/?alerta=".$alerta);
-        }
+        // Verificar si el usuario existe
+        if ($user) {
+            // Verificar las credenciales manualmente
+            if (Hash::check($password, $user->password)) {
+                // Verificar activación de la cuenta
+                $enable = $user->enable ?? false;
 
-        $enable = (bool) auth()->user()->enable;
-        if(!$enable){
-            $alerta="Su cuenta no ha sido activada aun, el proceso de activación de su cuenta puede tardar 48 horas";
-                return redirect("http://localhost:9528/?alerta=".$alerta);
-        }
+                if (!$enable) {
+                    // Manejar el caso en que la cuenta no está activada
+                       // Autenticación exitosa, redirigir con el token
+    $token = auth()->getToken();
+    return redirect("http://localhost:9528/?token=".$token);
+                }
 
-        return redirect("http://localhost:9528/?token=".$token);
+                // Redirigir con el token
+                              // Autenticación exitosa, generar el token
+                              $token = auth()->login($user);
+return redirect("http://localhost:9528/?token=".$token);
+            } else {
+                // Imprimir información para depuración
+                \Log::error('Failed authentication attempt - Incorrect password', ['email' => $email]);
+            }
         } else {
-            $login = $request->has('login') ? $request->get('login') : 0;
+            // Imprimir información para depuración
+            \Log::error('Failed authentication attempt - User not found', ['email' => $email]);
+        }
 
+        // Manejar el caso en que la autenticación falla
+        $alerta = "Su cuenta no se encuentra registrada en nuestro sistema, debe mandar un correo a la coordinación para solicitar su registro";
+        return redirect("http://localhost:9528/?alerta=".$alerta);
+    }
+ else {
+    // Manejar el caso en que no se proporciona un nombre de usuario
+    $login = $request->has('login') ? $request->get('login') : 0;
 
 
             if($login == 1 ){

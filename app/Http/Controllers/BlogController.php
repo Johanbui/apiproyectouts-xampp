@@ -30,7 +30,7 @@ class BlogController extends Controller
         foreach ($blogs as $blog) {
             $id_file = $blog->file_id;
             $file = File::find($id_file);
-            $file->url = "http://apiproyectouts.test/api/files/".$id_file;
+            $file->url = "http://localhost:8080/apiproyectouts/public/api/files/".$id_file;
             $blog->file =  $file;
         }
 
@@ -50,7 +50,7 @@ class BlogController extends Controller
         $blog = blog::find($blogId);
         $id_file = $blog->file_id;
         $file = File::find($id_file);
-        $file->url = "http://apiproyectouts.test/api/files/".$id_file;
+        $file->url = "http://localhost:8080/apiproyectouts/public/api/files/".$id_file;
         $blog->file =  $file;
 
         return response()->json([
@@ -110,7 +110,7 @@ class BlogController extends Controller
     // Iterar sobre las noticias para agregar la URL de la imagen a cada una
     foreach ($lastThreeBlogs as $blog) {
         $file = File::find($blog->file_id);
-        $file->url = "http://apiproyectouts.test/api/files/" . $blog->file_id;
+        $file->url = "http://localhost:8080/apiproyectouts/public/api/files/" . $blog->file_id;
         $blog->file = $file;
     }
 

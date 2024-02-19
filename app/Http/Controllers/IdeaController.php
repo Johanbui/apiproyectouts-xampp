@@ -320,13 +320,13 @@ class IdeaController extends Controller
 
                 $id_file = $IdeasArchivos->id_archivo;
                 $file = File::find($id_file);
-                $file->url = "http://apiproyectouts.test/api/files/" . $id_file;
+                $file->url = "http://localhost:8080/apiproyectouts/public/api/files/" . $id_file;
                 $IdeasArchivos->file = $file;
 
                 $id_file_confirmation = $IdeasArchivos->id_file_confirmation;
                 if ($id_file_confirmation) {
                     $fileConfirmation = File::find($id_file_confirmation);
-                    $file->url = "http://apiproyectouts.test/api/files/" . $id_file_confirmation;
+                    $file->url = "http://localhost:8080/apiproyectouts/public/api/files/" . $id_file_confirmation;
                     $IdeasArchivos->fileConfirmation = $fileConfirmation;
                 }
 
@@ -561,7 +561,7 @@ class IdeaController extends Controller
                 if ($IdeasArchivos->id_archivo !== null) {
                     $id_file = $IdeasArchivos->id_archivo;
                     $file = File::find($id_file);
-                    $file->url = "http://apiproyectouts.test/api/files/" . $id_file;
+                    $file->url = "http://localhost:8080/apiproyectouts/public/api/files/" . $id_file;
                     $IdeasArchivos->file = $file;
                 } else {
                     $IdeasArchivos->file = null;
@@ -570,7 +570,7 @@ class IdeaController extends Controller
                 $id_file_confirmation = $IdeasArchivos->id_file_confirmation;
                 if ($id_file_confirmation !== null) {
                     $fileConfirmation = File::find($id_file_confirmation);
-                    $file->url = "http://apiproyectouts.test/api/files/" . $id_file_confirmation;
+                    $file->url = "http://localhost:8080/apiproyectouts/public/api/files/" . $id_file_confirmation;
                     $IdeasArchivos->fileConfirmation = $fileConfirmation;
                 } else {
                     $IdeasArchivos->fileConfirmation = null;
