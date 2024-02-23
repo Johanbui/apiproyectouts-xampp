@@ -73,13 +73,13 @@ class AuthController extends Controller
                     // Manejar el caso en que la cuenta no está activada
                        // Autenticación exitosa, redirigir con el token
     $token = auth()->getToken();
-    return redirect("http://localhost:8080/dist/?token=".$token);
+    return redirect("http://192.168.10.242/dist/?token=".$token);
                 }
 
                 // Redirigir con el token
                               // Autenticación exitosa, generar el token
                               $token = auth()->login($user);
-return redirect("http://localhost:8080/dist/?token=".$token);
+return redirect("http://192.168.10.242/dist/?token=".$token);
             } else {
                 // Imprimir información para depuración
                 \Log::error('Failed authentication attempt - Incorrect password', ['email' => $email]);
@@ -91,7 +91,7 @@ return redirect("http://localhost:8080/dist/?token=".$token);
 
         // Manejar el caso en que la autenticación falla
         $alerta = "Su cuenta no se encuentra registrada en nuestro sistema, debe mandar un correo a la coordinación para solicitar su registro";
-        return redirect("http://localhost:8080/dist/?alerta=".$alerta);
+        return redirect("http://192.168.10.242/dist/?alerta=".$alerta);
     }
  else {
     // Manejar el caso en que no se proporciona un nombre de usuario
@@ -170,16 +170,16 @@ return redirect("http://localhost:8080/dist/?token=".$token);
 
             $user->save();
             $alerta="Su registro ha sido exitoso, el proceso de activación de su cuenta puede tardar 48 horas";
-            return redirect("http://localhost:8080/dist/?alerta=".$alerta);
+            return redirect("http://192.168.10.242/dist/?alerta=".$alerta);
             }
 
             $enable = (bool) auth()->user()->enable;
             if(!$enable){
                 $alerta="Su cuenta no ha sido activada aun, el proceso de activación de su cuenta puede tardar 48 horas";
-                return redirect("http://localhost:8080/dist/?alerta=".$alerta);
+                return redirect("http://192.168.10.242/dist/?alerta=".$alerta);
             }
-            //echo "http://localhost:8080/dist/?token=".$token;
-           return redirect("http://localhost:8080/dist/?token=".$token);
+            //echo "http://192.168.10.242/dist/?token=".$token;
+           return redirect("http://192.168.10.242/dist/?token=".$token);
         }
 
 

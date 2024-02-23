@@ -29,7 +29,7 @@ class ActaController extends Controller
         foreach ($actas as $acta) {
             $id_file = $acta->file_id;
             $file = File::find($id_file);
-            $file->url = "http://localhost:8080/apiproyectouts/public/api/files/".$id_file;
+            $file->url = "http://192.168.10.242/apiproyectouts/public/api/files/".$id_file;
             $acta->file =  $file;
         }
 
@@ -49,7 +49,7 @@ class ActaController extends Controller
         $acta = Acta::find($actaId);
         $id_file = $acta->file_id;
         $file = File::find($id_file);
-        $file->url = "http://localhost:8080/apiproyectouts/public/api/files/".$id_file;
+        $file->url = "http://192.168.10.242/apiproyectouts/public/api/files/".$id_file;
         $acta->file =  $file;
 
         return response()->json([
