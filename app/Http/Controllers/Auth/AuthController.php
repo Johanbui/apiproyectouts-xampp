@@ -18,6 +18,7 @@ use Carbon\Carbon;
 
 use App\Models\Rol;
 use App\Models\Acta;
+use App\Models\Documentos;
 use App\Models\Blog;
 use App\Models\File;
 use App\Models\Idea;
@@ -133,7 +134,7 @@ return redirect("http://192.168.10.242/dist/?token=".$token);
             if (! $token = auth()->attempt($credentials)) {
 
                 if($userrolid['value'] = "Estudiante"){
-                    $rolid = 4;
+                    $rolid = 5;
                 }
 
                 $user = new User;

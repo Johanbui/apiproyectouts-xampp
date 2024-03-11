@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\NotifyMail;
 use App\Models\Rol;
 use App\Models\Acta;
+use App\Models\Documentos;
 use App\Models\Blog;
 use App\Models\File;
 use App\Models\Idea;

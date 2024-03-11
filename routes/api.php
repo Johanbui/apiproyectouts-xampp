@@ -102,6 +102,17 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
+    'prefix' => 'documentos'
+], function ($router) {
+    Route::get('getAll', [\App\Http\Controllers\DocumentosController::class, 'getAll'])->name('getAll');
+    Route::get('getOne', [\App\Http\Controllers\DocumentosController::class, 'getOne'])->name('getOne');
+    Route::put('update', [\App\Http\Controllers\DocumentosController::class, 'update'])->name('update');
+    Route::post('create', [\App\Http\Controllers\DocumentosController::class, 'create'])->name('create');
+});
+
+
+Route::group([
+    'middleware' => 'api',
     'prefix' => 'idea'
 ], function ($router) {
     Route::get('getAll', [\App\Http\Controllers\IdeaController::class, 'getAll'])->name('getAll');

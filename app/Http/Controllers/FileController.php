@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Acta;
 use App\Models\Blog;
+use App\Models\Documentos;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

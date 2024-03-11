@@ -126,7 +126,7 @@ class ListasSeeder extends Seeder
                 'idPadre' => 4
             ),
             array(
-                'id_lista_grupo' => '8', 'nombre' => 'Pago Modalidad',
+                'id_lista_grupo' => '8', 'nombre' => 'Pago Modalidad y Autorización de datos sensibles',
                 'codigo' => 'PAGMOD', 'valor' => '1', 'estado' => true,
                 'idPadre' => null
             ),

@@ -45,6 +45,7 @@ class PermissionSeeder extends Seeder
             array('code' => 'ACTA-TOGGLE', 'name'=> 'Inhabilitar/Habilitar Acta'),
             array('code' => 'ACTA-ONE', 'name'=> 'Ver Acta '),
 
+
             // CRUD IDEAS
             array('code' => 'IDEA-INDEX', 'name'=> 'Listado de Ideas'),
             array('code' => 'IDEA-CREATE', 'name'=> 'Crear Idea'),
@@ -60,6 +61,12 @@ class PermissionSeeder extends Seeder
             array('code' => 'BLOG-TOGGLE', 'name'=> 'Inhabilitar/Habilitar Blog'),
             array('code' => 'BLOG-ONE', 'name'=> 'Ver Blog'),
 
+            // CRUD DOCUMENTOS
+            array('code' => 'DOCUMENTOS-INDEX', 'name'=> 'Listado de Documentos'),
+            array('code' => 'DOCUMENTOS-CREATE', 'name'=> 'Crea Documentos'),
+            array('code' => 'DOCUMENTOS-EDIT', 'name'=> 'Edita Documentos'),
+            array('code' => 'DOCUMENTOS-TOGGLE', 'name'=> 'Inhabilitar/Habilita Documentos'),
+            array('code' => 'DOCUMENTOS-ONE', 'name'=> 'Ve Documentos '),
 
         );
 

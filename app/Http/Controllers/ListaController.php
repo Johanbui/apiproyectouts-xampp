@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Acta;
 use App\Models\Blog;
+use App\Models\Documentos;
 use App\Models\Lista;
 use App\Models\ListaGrupo;
 use Illuminate\Http\Request;
